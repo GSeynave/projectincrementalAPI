@@ -1,24 +1,30 @@
 package com.projectincremental.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.projectincremental.entities.Monstre;
 import com.projectincremental.entities.Zone;
+import com.projectincremental.repositories.MonstreRepository;
 import com.projectincremental.services.MonstreService;
+import com.projectincremental.services.ZoneService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class MonstreServiceImpl implements MonstreService {
 
-	public List<Monstre> getMonstresByZoneId(Long zoneId) {
-		List<Monstre> monstres = new ArrayList<>();
-		Monstre monstre = new Monstre();
-		monstre.setZone(new Zone());
-		monstre.getZone().setId(zoneId);
-		monstres.add(monstre);
-		return monstres;
+	@Autowired
+	private MonstreRepository monstreRepository;
+	@Autowired
+	private ZoneService zoneService;
+	public List<Monstre> getMonstresByZoneId(Long zoneId) throws Exception {
+		Optional<Zone> zone = this.zoneService.findById(zoneId);
+		if (zone.isPresent()) {
+			return this.monstreRepository.findByZone(zone.get());
+		} else {
+			throw new Exception();
+		}
 	}
 }

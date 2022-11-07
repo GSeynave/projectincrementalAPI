@@ -1,10 +1,10 @@
 package com.projectincremental.services;
 
-import java.util.List;
-
 import com.projectincremental.entities.Monstre;
+
+import java.util.List;
 
 public interface MonstreService {
 
-	public List<Monstre> getMonstresByZoneId(Long zoneId);
+	List<Monstre> getMonstresByZoneId(Long zoneId) throws Exception;
 }
