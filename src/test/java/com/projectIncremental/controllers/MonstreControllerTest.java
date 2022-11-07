@@ -3,9 +3,9 @@ package com.projectIncremental.controllers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.projectincremental.DTO.ZoneDto;
+import com.projectincremental.DTO.MonstreDto;
 import com.projectincremental.ProjectIncrementalApplication;
-import com.projectincremental.controllers.ZoneController;
+import com.projectincremental.controllers.MonstreController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,62 +23,52 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 
 @SpringBootTest(classes = ProjectIncrementalApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ZoneControllerTest {
+public class MonstreControllerTest {
 
     @LocalServerPort
     private int port;
 
     private MockMvc mockMvc;
+
     private ObjectMapper mapper;
 
     @Autowired
     private TestRestTemplate restTemplate;
+
     @Autowired
-    private ZoneController zoneController;
+    private MonstreController monstreController;
 
     @BeforeEach
     public void setUp() {
         mapper = new ObjectMapper().registerModule(new JavaTimeModule());
-        mockMvc = MockMvcBuilders.standaloneSetup(zoneController)
+        mockMvc = MockMvcBuilders.standaloneSetup(monstreController)
                 .build();
     }
 
     @Test
-    void getAllTest() throws Exception {
+    void getMonstresByZoneIdTest() throws Exception {
+        // GIVEN
+        Long zoneId = 1L;
+
         // WHEN
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("/zones")
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("/monstres/"+zoneId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         // THEN
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        List<ZoneDto> zones =mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-        Assertions.assertThat(zones).isNotNull();
+        List<MonstreDto> monstres = mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<MonstreDto>>() {});
+        Assertions.assertThat(monstres).isNotNull();
     }
 
     @Test
-    void getByIdTest() throws Exception {
+    void getMonstresByZoneIdFailTest() throws Exception {
         // GIVEN
-        Long zoneId = 1L;
+        Long zoneId = 6000L;
 
         // WHEN
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("/zones/" +zoneId)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        // THEN
-        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        ZoneDto zone =mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-        Assertions.assertThat(zone).isNotNull();
-        Assertions.assertThat(zone.getId()).isEqualTo(1L);
-    }
-
-    @Test
-    void getByIdFailTest() throws Exception {
-        // WHEN
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("/zones/6000")
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("/monstres/"+zoneId)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();

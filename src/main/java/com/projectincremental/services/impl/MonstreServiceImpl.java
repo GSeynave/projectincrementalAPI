@@ -19,12 +19,8 @@ public class MonstreServiceImpl implements MonstreService {
 	private MonstreRepository monstreRepository;
 	@Autowired
 	private ZoneService zoneService;
-	public List<Monstre> getMonstresByZoneId(Long zoneId) throws Exception {
+	public List<Monstre> getMonstresByZoneId(Long zoneId) {
 		Optional<Zone> zone = this.zoneService.findById(zoneId);
-		if (zone.isPresent()) {
-			return this.monstreRepository.findByZone(zone.get());
-		} else {
-			throw new Exception();
-		}
+		return this.monstreRepository.findByZone(zone.get());
 	}
 }

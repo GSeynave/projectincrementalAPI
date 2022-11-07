@@ -1,6 +1,8 @@
 package com.projectincremental.controllers;
 
 import com.projectincremental.DTO.ErrorMessage;
+import com.projectincremental.DTO.ZoneDto;
+import com.projectincremental.EntityDtoConverter;
 import com.projectincremental.entities.Zone;
 import com.projectincremental.services.ZoneService;
 import io.swagger.annotations.ApiOperation;
@@ -13,17 +15,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/zones", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ZoneController {
 
     Logger logger = LoggerFactory.getLogger(ZoneController.class);
+    @Autowired
+    private EntityDtoConverter converter;
     @Autowired
     private ZoneService zoneService;
 
@@ -35,28 +39,32 @@ public class ZoneController {
             @ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class)
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Zone> getZoneById(@PathVariable Long id) {
+    public ResponseEntity<ZoneDto> getZoneById(@PathVariable Long id) {
             logger.info("Accessing api/zones/" +id);
             Optional<Zone> zone = this.zoneService.findById(id);
             if (zone.isPresent()) {
-                return new ResponseEntity<>(zone.get(), HttpStatus.OK);
+                ZoneDto zoneDto = converter.convertEntityToDto(zone.get());
+                return new ResponseEntity<>(zoneDto, HttpStatus.OK);
             } else {
                 throw new EntityNotFoundException("Zone note found for id: " +id);
             }
     }
 
+    @ApiOperation(value = "Request for all Zones")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 404, message = "Zone not found"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class)
+    })
     @GetMapping("")
-    public ResponseEntity<List<Zone>> getAll() {
-        try {
-            logger.info("Accessing api/zones/");
-            List<Zone> zones = this.zoneService.findAll();
-            if (zones.size() > 0) {
-                return new ResponseEntity<>(zones, HttpStatus.OK);
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Zone not found", e);
+    public ResponseEntity<List<ZoneDto>> getAll() {
+        logger.info("Accessing api/zones/");
+        List<Zone> zones = this.zoneService.findAll();
+        if (zones.size() > 0) {
+            List<ZoneDto> zonesDto = zones.stream().map(zone -> converter.convertEntityToDto(zone)).collect(Collectors.toList());
+            return new ResponseEntity<>(zonesDto, HttpStatus.OK);
+        } else {
+            throw new EntityNotFoundException("Zones not found");
         }
     }
 
