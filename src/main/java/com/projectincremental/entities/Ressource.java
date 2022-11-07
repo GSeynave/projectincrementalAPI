@@ -1,15 +1,7 @@
 package com.projectincremental.entities;
 
+import javax.persistence.*;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Ressource {
@@ -27,4 +19,6 @@ public class Ressource {
 	private Monstre monstre;
 	@OneToMany(mappedBy = "ressource")
 	private Set<RecetteRessourceRequire> ressourcesRequired;
+	@OneToMany(mappedBy = "ressource")
+	private Set<InventaireRessource> inventaireRessources;
 }

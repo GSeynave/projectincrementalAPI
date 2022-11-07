@@ -20,5 +20,4 @@ public class RecetteRessourceRequire {
 	Ressource ressource;
 	
 	private Long quantite;
-
 }

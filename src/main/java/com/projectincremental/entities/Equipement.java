@@ -1,12 +1,7 @@
 package com.projectincremental.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Equipement {
@@ -23,4 +18,6 @@ public class Equipement {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name= "recette_id", referencedColumnName = "id")
 	private Recette recette;
+	@OneToMany(mappedBy = "ressource")
+	private Set<InventaireRessource> inventaireRessources;
 }
