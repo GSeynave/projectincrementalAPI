@@ -2,7 +2,7 @@ package com.projectincremental.controllers;
 
 import com.projectincremental.DTO.ErrorMessage;
 import com.projectincremental.DTO.MonstreDto;
-import com.projectincremental.EntityDtoConverter;
+import com.projectincremental.DTO.mapper.MonstreMapper;
 import com.projectincremental.entities.Monstre;
 import com.projectincremental.services.MonstreService;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +27,7 @@ public class MonstreController {
     @Autowired
     private MonstreService monstreService;
     @Autowired
-    private EntityDtoConverter converter;
+    private MonstreMapper mapper;
     Logger logger = LoggerFactory.getLogger(MonstreController.class);
 
 
@@ -42,25 +42,10 @@ public class MonstreController {
         logger.info("Accessing api/monstres/" +zoneId);
         List<Monstre> monstres = this.monstreService.getMonstresByZoneId(zoneId);
         if (monstres.size() > 0) {
-            List<MonstreDto> monstresDto = monstres.stream().map(monstre -> converter.convertEntityToDto(monstre)).collect(Collectors.toList());
+            List<MonstreDto> monstresDto = monstres.stream().map(monstre -> mapper.monstreToMonstreDto(monstre)).collect(Collectors.toList());
             return new ResponseEntity<>(monstresDto, HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Monstres not found");
         }
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public ErrorMessage handleErrors(EntityNotFoundException e) {
-        logger.info("Entity not found", e.getMessage());
-        return new ErrorMessage(e.getMessage(), "404");
-    }
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public ErrorMessage handleErrors(Exception e) {
-        logger.info("Internal server error exception", e.getMessage());
-        return new ErrorMessage(e.getMessage(), "500");
     }
 }

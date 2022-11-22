@@ -2,7 +2,7 @@ package com.projectincremental.controllers;
 
 import com.projectincremental.DTO.ErrorMessage;
 import com.projectincremental.DTO.ZoneDto;
-import com.projectincremental.EntityDtoConverter;
+import com.projectincremental.DTO.mapper.ZoneMapper;
 import com.projectincremental.entities.Zone;
 import com.projectincremental.services.ZoneService;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +27,7 @@ public class ZoneController {
 
     Logger logger = LoggerFactory.getLogger(ZoneController.class);
     @Autowired
-    private EntityDtoConverter converter;
+    private ZoneMapper mapper;
     @Autowired
     private ZoneService zoneService;
 
@@ -43,7 +43,7 @@ public class ZoneController {
             logger.info("Accessing api/zones/" +id);
             Optional<Zone> zone = this.zoneService.findById(id);
             if (zone.isPresent()) {
-                ZoneDto zoneDto = converter.convertEntityToDto(zone.get());
+                ZoneDto zoneDto = mapper.zoneToZoneDto(zone.get());
                 return new ResponseEntity<>(zoneDto, HttpStatus.OK);
             } else {
                 throw new EntityNotFoundException("Zone note found for id: " +id);
@@ -61,25 +61,10 @@ public class ZoneController {
         logger.info("Accessing api/zones/");
         List<Zone> zones = this.zoneService.findAll();
         if (zones.size() > 0) {
-            List<ZoneDto> zonesDto = zones.stream().map(zone -> converter.convertEntityToDto(zone)).collect(Collectors.toList());
+            List<ZoneDto> zonesDto = zones.stream().map(zone -> mapper.zoneToZoneDto(zone)).collect(Collectors.toList());
             return new ResponseEntity<>(zonesDto, HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Zones not found");
         }
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public ErrorMessage handleErrors(EntityNotFoundException e) {
-        logger.info("Entity not found", e.getMessage());
-        return new ErrorMessage(e.getMessage(), "404");
-    }
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public ErrorMessage handleErrors(Exception e) {
-        logger.info("Internal server error exception", e.getMessage());
-        return new ErrorMessage(e.getMessage(), "500");
     }
 }
