@@ -6,10 +6,8 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;
 
-
-public interface InventaireRessourceRepository extends Repository<InventaireRessourceRepository, Long> {
+@org.springframework.stereotype.Repository
+public interface InventaireRessourceRepository extends Repository<InventaireRessource, Long> {
 
     Optional<List<InventaireRessource>> findAllByCompteId(Long compteId);
-
-    InventaireRessource create();
 }

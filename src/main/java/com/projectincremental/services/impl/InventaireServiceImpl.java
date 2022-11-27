@@ -72,8 +72,4 @@ public class InventaireServiceImpl implements InventaireService {
         }
         return new ArrayList<>();
     }
-
-    public InventaireRessource createInventaireRessource() {
-        return this.inventaireRessourceRepository.create();
-    }
 }

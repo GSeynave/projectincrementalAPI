@@ -18,8 +18,7 @@ public class ZoneServiceImpl implements ZoneService {
 
     @Override
     public Optional<Zone> findById(Long zoneId) {
-        return Optional.of(this.zoneRepository.findZoneById(zoneId)
-                .orElseThrow());
+        return this.zoneRepository.findZoneById(zoneId);
     }
 
     @Override
