@@ -3,22 +3,18 @@ package com.projectincremental.entities;
 import javax.persistence.*;
 
 @Entity
-public class InventaireEquipement {
+public class InventaireConsommable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "compte_id")
+    @JoinColumn(name = "compte_id", nullable = false)
     private Compte compte;
 
     @ManyToOne
-    @JoinColumn(name = "equipement_id")
-    private Equipement equipement;
-
-    @ManyToOne
-    @JoinColumn(name = "personnage_id")
-    private Personnage personnage;
+    @JoinColumn(name = "consommable_id", nullable = false)
+    private Consommable consommable;
 
     private Long quantite;
 
@@ -38,20 +34,12 @@ public class InventaireEquipement {
         this.compte = compte;
     }
 
-    public Equipement getEquipement() {
-        return equipement;
+    public Consommable getConsommable() {
+        return consommable;
     }
 
-    public void setEquipement(Equipement equipement) {
-        this.equipement = equipement;
-    }
-
-    public Personnage getPersonnage() {
-        return personnage;
-    }
-
-    public void setPersonnage(Personnage personnage) {
-        this.personnage = personnage;
+    public void setConsommable(Consommable consommable) {
+        this.consommable = consommable;
     }
 
     public Long getQuantite() {

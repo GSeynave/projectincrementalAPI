@@ -1,8 +1,8 @@
 package com.projectincremental.controllers;
 
-import com.projectincremental.DTO.ErrorMessage;
-import com.projectincremental.DTO.MonstreDto;
-import com.projectincremental.DTO.mapper.MonstreMapper;
+import com.projectincremental.dtos.ErrorMessage;
+import com.projectincremental.dtos.MonstreDto;
+import com.projectincremental.dtos.mappers.MonstreMapper;
 import com.projectincremental.entities.Monstre;
 import com.projectincremental.services.MonstreService;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,16 +35,19 @@ public class MonstreController {
     @ApiOperation(value = "Request for a Monstre by zone")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 404, message = "Zone not found"),
+            @ApiResponse(code = 404, message = "Monstres not found"),
             @ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class)
     })
-    @GetMapping("/{zoneId}")
+    @GetMapping("/zones/{zoneId}")
     public ResponseEntity<List<MonstreDto>> getAllByZone(@PathVariable Long zoneId) {
         logger.info("Accessing api/monstres/" +zoneId);
-        List<Monstre> monstres = this.monstreService.getMonstresByZoneId(zoneId);
-        if (monstres.size() > 0) {
-            List<MonstreDto> monstresDto = monstres.stream().map(monstre -> mapper.monstreToMonstreDto(monstre)).collect(Collectors.toList());
-            return new ResponseEntity<>(monstresDto, HttpStatus.OK);
+        Optional<List<Monstre>> monstres = this.monstreService.getMonstresByZoneId(zoneId);
+        if (monstres.isPresent()) {
+            return new ResponseEntity<>(monstres
+                    .get()
+                    .stream()
+                    .map(mapper::toDto)
+                    .collect(Collectors.toList()), HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Monstres not found");
         }

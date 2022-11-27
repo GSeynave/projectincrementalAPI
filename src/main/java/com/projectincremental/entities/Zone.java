@@ -1,9 +1,7 @@
 package com.projectincremental.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Zone {
@@ -13,6 +11,14 @@ public class Zone {
 	private Long id;
 
 	private String nom;
+
+
+	@OneToMany(mappedBy = "zone")
+	private Set<Personnage> personnages;
+
+	@OneToMany(mappedBy = "zone")
+	private Set<Monstre> monstres;
+
 
 	public Long getId() {
 		return id;

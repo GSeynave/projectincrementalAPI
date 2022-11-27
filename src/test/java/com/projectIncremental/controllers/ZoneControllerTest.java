@@ -3,7 +3,7 @@ package com.projectIncremental.controllers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.projectincremental.DTO.ZoneDto;
+import com.projectincremental.dtos.ZoneDto;
 import com.projectincremental.ProjectIncrementalApplication;
 import com.projectincremental.controllers.ZoneController;
 import org.assertj.core.api.Assertions;

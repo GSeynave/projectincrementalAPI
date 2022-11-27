@@ -13,18 +13,13 @@ import java.util.Optional;
 @Service
 public class ZoneServiceImpl implements ZoneService {
 
-
     @Autowired
     private ZoneRepository zoneRepository;
 
     @Override
     public Optional<Zone> findById(Long zoneId) {
-        Optional<Zone> zone = this.zoneRepository.findZoneById(zoneId);
-        if (zone.isPresent()) {
-            return zone;
-        } else {
-            throw new EntityNotFoundException("Zone not found with id" +zoneId);
-        }
+        return Optional.of(this.zoneRepository.findZoneById(zoneId)
+                .orElseThrow());
     }
 
     @Override

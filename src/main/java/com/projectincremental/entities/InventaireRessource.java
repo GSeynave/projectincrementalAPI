@@ -13,11 +13,12 @@ public class InventaireRessource {
     @JoinColumn(name = "compte_id")
     private Compte compte;
 
-    private Long quantite;
-
     @ManyToOne
     @JoinColumn(name = "ressource_id")
     private Ressource ressource;
+
+    private Long quantite;
+
 
     public Long getId() {
         return id;

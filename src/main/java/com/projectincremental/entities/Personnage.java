@@ -1,13 +1,7 @@
 package com.projectincremental.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Personnage {
@@ -18,9 +12,70 @@ public class Personnage {
 	private String nom;
 	private Long niveau;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "statistique_id", referencedColumnName = "id")
-	private Statistique statistique;
+	@JoinColumn(name = "caracteristique_id", referencedColumnName = "id")
+	private Caracteristique caracteristique;
 	@ManyToOne
 	@JoinColumn(name = "zone_id", nullable = false)
 	private Zone zone;
+	@OneToMany(mappedBy = "personnage")
+	private Set<InventaireEquipement> inventaireEquipements;
+	@ManyToOne
+	@JoinColumn(name = "compte_id", nullable = false)
+	private Compte compte;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public Long getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Long niveau) {
+		this.niveau = niveau;
+	}
+
+	public Caracteristique getCaracteristique() {
+		return caracteristique;
+	}
+
+	public void setCaracteristique(Caracteristique caracteristique) {
+		this.caracteristique = caracteristique;
+	}
+
+	public Zone getZone() {
+		return zone;
+	}
+
+	public void setZone(Zone zone) {
+		this.zone = zone;
+	}
+
+	public Set<InventaireEquipement> getInventaireEquipements() {
+		return inventaireEquipements;
+	}
+
+	public void setInventaireEquipements(Set<InventaireEquipement> inventaireEquipements) {
+		this.inventaireEquipements = inventaireEquipements;
+	}
+
+	public Compte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(Compte compte) {
+		this.compte = compte;
+	}
 }

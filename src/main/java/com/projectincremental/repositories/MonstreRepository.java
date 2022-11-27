@@ -1,6 +1,7 @@
 package com.projectincremental.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.Repository;
 
@@ -9,5 +10,5 @@ import com.projectincremental.entities.Zone;
 
 public interface MonstreRepository extends Repository<Monstre, Long>{
 
-	List<Monstre> findByZone(Zone zone);
+	Optional<List<Monstre>> findByZoneId(Long zoneId);
 }

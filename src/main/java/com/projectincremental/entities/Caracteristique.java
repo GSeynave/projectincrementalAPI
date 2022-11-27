@@ -1,12 +1,9 @@
 package com.projectincremental.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Statistique {
+public class Caracteristique {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -29,6 +26,15 @@ public class Statistique {
 	private Long resistanceFeu;
 	private Long resistanceAir;
 	private Long resistanceEau;
+
+	@OneToOne(mappedBy = "caracteristique")
+	private Personnage personnage;
+	@OneToOne(mappedBy = "caracteristique")
+	private Monstre monstre;
+	@OneToOne(mappedBy = "caracteristique")
+	private Equipement equipement;
+	@OneToOne(mappedBy = "caracteristique")
+	private Consommable consommable;
 
 	public Long getId() {
 		return id;

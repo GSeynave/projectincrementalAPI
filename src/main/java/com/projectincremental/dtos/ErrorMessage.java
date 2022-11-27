@@ -1,4 +1,4 @@
-package com.projectincremental.DTO;
+package com.projectincremental.dtos;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

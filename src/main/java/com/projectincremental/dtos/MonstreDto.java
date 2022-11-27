@@ -1,10 +1,10 @@
-package com.projectincremental.DTO;
+package com.projectincremental.dtos;
 
 public class MonstreDto {
 
     private Long id;
     private String nom;
-    private Long statistiqueId;
+    private CaracteristiqueDto caracteristique;
     private Long zoneId;
 
     public Long getId() {
@@ -23,12 +23,12 @@ public class MonstreDto {
         this.nom = nom;
     }
 
-    public Long getStatistiqueId() {
-        return statistiqueId;
+    public CaracteristiqueDto getCaracteristique() {
+        return caracteristique;
     }
 
-    public void setStatistiqueId(Long statistiqueId) {
-        this.statistiqueId = statistiqueId;
+    public void setCaracteristique(CaracteristiqueDto caracteristiqueDto) {
+        this.caracteristique = caracteristiqueDto;
     }
 
     public Long getZoneId() {

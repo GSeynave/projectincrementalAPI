@@ -1,9 +1,7 @@
 package com.projectincremental.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Compte {
@@ -14,4 +12,19 @@ public class Compte {
     private String Username;
     private String mail;
     private byte[] password;
+
+    @OneToMany(mappedBy = "compte")
+    private Set<Personnage> personnages;
+
+    @OneToMany(mappedBy = "compte")
+    private Set<InventaireRessource> inventaireRessources;
+
+    @OneToMany(mappedBy = "compte")
+    private Set<InventaireConsommable> inventaireConsommables;
+
+    @OneToMany(mappedBy = "compte")
+    private Set<InventaireEquipement> inventaireEquipements;
+
+    @OneToMany(mappedBy = "compte")
+    private Set<Metier> metiers;
 }

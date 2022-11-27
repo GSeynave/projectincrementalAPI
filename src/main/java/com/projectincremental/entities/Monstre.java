@@ -1,13 +1,8 @@
 package com.projectincremental.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 public class Monstre {
@@ -19,12 +14,14 @@ public class Monstre {
 	private String nom;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "statistique_id", referencedColumnName = "id")
-	private Statistique statistique;
+	@JoinColumn(name = "caracteristique_id", referencedColumnName = "id", nullable = false)
+	private Caracteristique caracteristique;
 
 	@ManyToOne
 	@JoinColumn(name = "zone_id", nullable = false)
 	private Zone zone;
+	@OneToMany(mappedBy = "monstre")
+	private Set<Ressource> ressources;
 
 	public Long getId() {
 		return id;
@@ -38,11 +35,11 @@ public class Monstre {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public Statistique getStatistique() {
-		return statistique;
+	public Caracteristique getStatistique() {
+		return caracteristique;
 	}
-	public void setStatistique(Statistique statistique) {
-		this.statistique = statistique;
+	public void setStatistique(Caracteristique caracteristique) {
+		this.caracteristique = caracteristique;
 	}
 	public Zone getZone() {
 		return zone;

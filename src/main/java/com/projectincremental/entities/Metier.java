@@ -1,9 +1,7 @@
 package com.projectincremental.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Metier {
@@ -13,4 +11,14 @@ public class Metier {
 	private Long id;
 	private String nom;
 	private Long niveau;
+	private Long experience;
+
+	@ManyToOne
+	@JoinColumn(name = "compte_id", nullable = false)
+	private Compte compte;
+
+	@OneToMany(mappedBy = "metier")
+	private Set<Equipement> equipements;
+	@OneToMany(mappedBy = "metier")
+	private Set<Consommable> consommables;
 }

@@ -1,4 +1,4 @@
-package com.projectincremental.DTO;
+package com.projectincremental.dtos;
 
 public class ZoneDto {
 

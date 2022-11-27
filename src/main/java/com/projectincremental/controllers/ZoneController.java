@@ -1,8 +1,8 @@
 package com.projectincremental.controllers;
 
-import com.projectincremental.DTO.ErrorMessage;
-import com.projectincremental.DTO.ZoneDto;
-import com.projectincremental.DTO.mapper.ZoneMapper;
+import com.projectincremental.dtos.ErrorMessage;
+import com.projectincremental.dtos.ZoneDto;
+import com.projectincremental.dtos.mappers.ZoneMapper;
 import com.projectincremental.entities.Zone;
 import com.projectincremental.services.ZoneService;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,8 +44,7 @@ public class ZoneController {
             logger.info("Accessing api/zones/" +id);
             Optional<Zone> zone = this.zoneService.findById(id);
             if (zone.isPresent()) {
-                ZoneDto zoneDto = mapper.zoneToZoneDto(zone.get());
-                return new ResponseEntity<>(zoneDto, HttpStatus.OK);
+                return new ResponseEntity<>(mapper.toDto(zone.get()), HttpStatus.OK);
             } else {
                 throw new EntityNotFoundException("Zone note found for id: " +id);
             }
@@ -61,10 +61,10 @@ public class ZoneController {
         logger.info("Accessing api/zones/");
         List<Zone> zones = this.zoneService.findAll();
         if (zones.size() > 0) {
-            List<ZoneDto> zonesDto = zones.stream().map(zone -> mapper.zoneToZoneDto(zone)).collect(Collectors.toList());
+            List<ZoneDto> zonesDto = zones.stream().map(mapper::toDto).collect(Collectors.toList());
             return new ResponseEntity<>(zonesDto, HttpStatus.OK);
         } else {
-            throw new EntityNotFoundException("Zones not found");
+            throw new EntityNotFoundException("Aucunes zone n'a ete trouvee");
         }
     }
 }

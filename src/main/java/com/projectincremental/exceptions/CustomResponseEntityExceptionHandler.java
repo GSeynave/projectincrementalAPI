@@ -1,6 +1,6 @@
 package com.projectincremental.exceptions;
 
-import com.projectincremental.DTO.ErrorMessage;
+import com.projectincremental.dtos.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
