@@ -8,8 +8,8 @@ import java.util.Optional;
 
 
 public interface ZoneRepository extends Repository<Zone, Long> {
-	
-	Optional<Zone> findZoneById(Long id);
+
 	List<Zone> findAll();
+	Optional<Zone> findById(Long zoneId);
 
 }

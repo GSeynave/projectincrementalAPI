@@ -30,4 +30,28 @@ public class CaracteristiqueMapper {
         dto.setResistanceEau(caracteristique.getResistanceEau());
         return dto;
     }
+
+    public Caracteristique toEntity(CaracteristiqueDto caracteristiqueDto) {
+        Caracteristique caracteristique = new Caracteristique();
+        caracteristique.setId(caracteristiqueDto.getId());
+        caracteristique.setNiveau(caracteristiqueDto.getNiveau());
+        caracteristique.setVie(caracteristiqueDto.getVie());
+        caracteristique.setTerre(caracteristiqueDto.getTerre());
+        caracteristique.setFeu(caracteristiqueDto.getFeu());
+        caracteristique.setAir(caracteristiqueDto.getAir());
+        caracteristique.setEau(caracteristiqueDto.getEau());
+        caracteristique.setSagesse(caracteristiqueDto.getSagesse());
+        caracteristique.setHate(caracteristiqueDto.getHate());
+        caracteristique.setPuissance(caracteristiqueDto.getPuissance());
+        caracteristique.setPrecision(caracteristiqueDto.getPrecision());
+        caracteristique.setDexterite(caracteristiqueDto.getDexterite());
+        caracteristique.setEnergie(caracteristiqueDto.getEnergie());
+        caracteristique.setCritiqueChance(caracteristiqueDto.getCritiqueChance());
+        caracteristique.setCritiqueDommage(caracteristiqueDto.getCritiqueDommage());
+        caracteristique.setResistanceTerre(caracteristiqueDto.getResistanceTerre());
+        caracteristique.setResistanceFeu(caracteristiqueDto.getResistanceFeu());
+        caracteristique.setResistanceAir(caracteristiqueDto.getResistanceAir());
+        caracteristique.setResistanceEau(caracteristiqueDto.getResistanceEau());
+        return caracteristique;
+    }
 }

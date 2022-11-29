@@ -10,4 +10,8 @@ import java.util.Optional;
 public interface InventaireRessourceRepository extends Repository<InventaireRessource, Long> {
 
     Optional<List<InventaireRessource>> findAllByCompteId(Long compteId);
+
+    InventaireRessource save(InventaireRessource inventaireRessource);
+
+    Optional<InventaireRessource> findByCompteIdAndRessourceId(Long id, long ressourceId);
 }

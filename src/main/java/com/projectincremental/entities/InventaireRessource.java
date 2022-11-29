@@ -43,4 +43,12 @@ public class InventaireRessource {
     public void setRessource(Ressource ressource) {
         this.ressource = ressource;
     }
+
+    public Compte getCompte() {
+        return compte;
+    }
+
+    public void setCompte(Compte compte) {
+        this.compte = compte;
+    }
 }

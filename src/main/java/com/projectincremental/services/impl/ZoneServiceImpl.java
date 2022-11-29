@@ -17,12 +17,12 @@ public class ZoneServiceImpl implements ZoneService {
     private ZoneRepository zoneRepository;
 
     @Override
-    public Optional<Zone> findById(Long zoneId) {
-        return this.zoneRepository.findZoneById(zoneId);
+    public List<Zone> findAll() {
+        return this.zoneRepository.findAll();
     }
 
     @Override
-    public List<Zone> findAll() {
-        return this.zoneRepository.findAll();
+    public Optional<Zone> findById(Long zoneId) {
+        return this.zoneRepository.findById(zoneId);
     }
 }

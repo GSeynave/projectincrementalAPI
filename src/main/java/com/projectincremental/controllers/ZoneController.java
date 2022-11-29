@@ -33,23 +33,6 @@ public class ZoneController {
     private ZoneService zoneService;
 
 
-    @ApiOperation(value = "Request for a Zone")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 404, message = "Zone not found"),
-            @ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class)
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<ZoneDto> getZoneById(@PathVariable Long id) {
-            logger.info("Accessing api/zones/" +id);
-            Optional<Zone> zone = this.zoneService.findById(id);
-            if (zone.isPresent()) {
-                return new ResponseEntity<>(mapper.toDto(zone.get()), HttpStatus.OK);
-            } else {
-                throw new EntityNotFoundException("Zone note found for id: " +id);
-            }
-    }
-
     @ApiOperation(value = "Request for all Zones")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Success"),
