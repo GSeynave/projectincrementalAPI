@@ -11,16 +11,16 @@ import com.projectincremental.entities.*;
 import com.projectincremental.repositories.InventaireConsommableRepository;
 import com.projectincremental.repositories.InventaireEquipementRepository;
 import com.projectincremental.repositories.InventaireRessourceRepository;
-import com.projectincremental.services.CompteService;
-import com.projectincremental.services.InventaireService;
-import com.projectincremental.services.RessourceService;
+import com.projectincremental.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +36,10 @@ public class InventaireServiceImpl implements InventaireService {
     private RessourceService ressourceService;
     @Autowired
     private CompteService compteService;
+    @Autowired
+    private PersonnageService personnageService;
+    @Autowired
+    private EquipementService equipementService;
 
     @Autowired
     private InventaireRessourceMapper inventaireRessourceMapper;
@@ -79,11 +83,11 @@ public class InventaireServiceImpl implements InventaireService {
     }
 
     @Override
+    @Transactional
     public Optional<InventaireRessource> updateInventaireRessource(long ressourceId, long quantite) {
 
         Long compteId = 1L;
-        Compte compte = compteService.findById(compteId)
-                .orElseThrow(() -> new EntityNotFoundException("erreur lors de la recuperation du compte"));
+        Compte compte = compteService.findById(compteId);
 
         Optional<InventaireRessource> inventaireRessource = inventaireRessourceRepository.findByCompteIdAndRessourceId(compte.getId(), ressourceId);
 
@@ -91,9 +95,7 @@ public class InventaireServiceImpl implements InventaireService {
             inventaireRessource.get().setQuantite(inventaireRessource.get().getQuantite() + quantite);
             return Optional.ofNullable(inventaireRessourceRepository.save(inventaireRessource.get()));
         } else {
-            Ressource ressource = ressourceService.findById(ressourceId)
-                    .orElseThrow(() -> new EntityNotFoundException("Impossible d'ajouter une ressource qui n'existe pas."));
-
+            Ressource ressource = ressourceService.findById(ressourceId);
             InventaireRessource inventaire = new InventaireRessource();
             inventaire.setRessource(ressource);
             inventaire.setCompte(compte);
@@ -101,4 +103,30 @@ public class InventaireServiceImpl implements InventaireService {
             return Optional.ofNullable(inventaireRessourceRepository.save(inventaire));
         }
     }
+
+    @Override
+    @Transactional
+    public Optional<InventaireEquipement> updateInventaireEquipement(long equipementId, long personnageId, long quantite) {
+
+        Long compteId = 1L;
+        Compte compte = compteService.findById(compteId);
+
+        Personnage personnage = personnageService.findById(personnageId);
+
+        Optional<InventaireEquipement> inventaireEquipement = inventaireEquipementRepository.findByCompteIdAndPersonnageIdAndEquipementId(compte.getId(), personnage.getId(), equipementId);
+
+        if (inventaireEquipement.isPresent()) {
+            inventaireEquipement.get().setQuantite(inventaireEquipement.get().getQuantite() + quantite);
+            return Optional.ofNullable(inventaireEquipementRepository.save(inventaireEquipement.get()));
+        } else {
+            Equipement equipement = equipementService.findById(equipementId);
+            InventaireEquipement inventaire = new InventaireEquipement();
+            inventaire.setEquipement(equipement);
+            inventaire.setCompte(compte);
+            inventaire.setPersonnage(personnage);
+            inventaire.setQuantite(quantite);
+            return Optional.ofNullable(inventaireEquipementRepository.save(inventaire));
+        }
+    }
+
 }

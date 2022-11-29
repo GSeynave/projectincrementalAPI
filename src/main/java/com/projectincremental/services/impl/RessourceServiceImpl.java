@@ -6,6 +6,7 @@ import com.projectincremental.services.RessourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -14,7 +15,8 @@ public class RessourceServiceImpl implements RessourceService {
 @Autowired
 private RessourceRepository ressourceRepository;
 
-    public Optional<Ressource> findById(Long ressourceId) {
-        return ressourceRepository.findById(ressourceId);
+    public Ressource findById(Long ressourceId) {
+        return ressourceRepository.findById(ressourceId)
+                .orElseThrow(() -> new EntityNotFoundException("Aucune ressource pour l'id " +ressourceId));
     }
 }

@@ -4,7 +4,7 @@ public class InventaireEquipementDto {
 
     private Long id;
     private EquipementDto equipement;
-    private PersonnageDto personnage;
+    private Long personnageId;
     private Long quantite;
 
     public Long getId() {
@@ -23,12 +23,12 @@ public class InventaireEquipementDto {
         this.equipement = equipement;
     }
 
-    public PersonnageDto getPersonnage() {
-        return personnage;
+    public Long getPersonnage() {
+        return personnageId;
     }
 
-    public void setPersonnage(PersonnageDto personnage) {
-        this.personnage = personnage;
+    public void setPersonnage(Long personnageId) {
+        this.personnageId = personnageId;
     }
 
     public Long getQuantite() {

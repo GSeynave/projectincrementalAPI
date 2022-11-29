@@ -70,12 +70,8 @@ public class PersonnageController {
     public ResponseEntity<PersonnageDto> getPersonnageById(@PathVariable("personnageId") Long personnageId) {
 
         logger.info("Accessing api/personnages/" + personnageId);
-        Optional<Personnage> personnage = personnageService.findById(personnageId);
-        if (personnage.isPresent()) {
-            return new ResponseEntity<>(personnageMapper.toDto(personnage.get()), HttpStatus.OK);
-        } else {
-            throw new EntityNotFoundException("Aucun personnage trouve pour l'id " + personnageId);
-        }
+        Personnage personnage = personnageService.findById(personnageId);
+        return new ResponseEntity<>(personnageMapper.toDto(personnage), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Request to set the zone of a personnage")

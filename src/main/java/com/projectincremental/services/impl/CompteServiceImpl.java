@@ -6,6 +6,7 @@ import com.projectincremental.services.CompteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -15,7 +16,8 @@ public class CompteServiceImpl implements CompteService {
     private CompteRepository compteRepository;
 
     @Override
-    public Optional<Compte> findById(Long compteId) {
-        return compteRepository.findById(compteId);
+    public Compte findById(Long compteId) {
+        return compteRepository.findById(compteId)
+                .orElseThrow(() -> new EntityNotFoundException("Aucun comte pour l'id " +compteId));
     }
 }

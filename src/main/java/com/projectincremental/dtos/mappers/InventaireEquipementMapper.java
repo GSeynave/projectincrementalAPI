@@ -9,13 +9,11 @@ import org.springframework.stereotype.Component;
 public class InventaireEquipementMapper {
     @Autowired
     private EquipementMapper equipementMapper;
-    @Autowired
-    private PersonnageMapper personnageMapper;
     public InventaireEquipementDto toDto(InventaireEquipement inventaireEquipement) {
         InventaireEquipementDto dto = new InventaireEquipementDto();
         dto.setEquipement(equipementMapper.toDto(inventaireEquipement.getEquipement()));
         dto.setQuantite(inventaireEquipement.getQuantite());
-        dto.setPersonnage(personnageMapper.toDto(inventaireEquipement.getPersonnage()));
+        dto.setPersonnage(inventaireEquipement.getPersonnage().getId());
         return dto;
     }
 }

@@ -29,34 +29,27 @@ public class PersonnaveServiceImpl implements PersonnageService {
     }
 
     @Override
-    public Optional<Personnage> findById(Long personnageId) {
-        return personnageRepository.findById(personnageId);
+    public Personnage findById(Long personnageId) {
+        return personnageRepository.findById(personnageId)
+                .orElseThrow(() -> new EntityNotFoundException("Aucun personnage pour l'id " +personnageId));
     }
 
     @Override
     @Transactional
     public Optional<Personnage> updateZone(Long personnageId, Long zoneId) {
-        Optional<Personnage> personnage = findById(personnageId);
-        if (personnage.isPresent()) {
-            // appel de la zone.
-            personnage.get().setZone(zoneService.findById(zoneId).orElseThrow(() -> new EntityNotFoundException("Aucune zone pour l'id " +zoneId)));
-            return Optional.ofNullable(updatePersonnage(personnage.get()));
-        } else {
-            throw new EntityNotFoundException("Aucun personnage pour l'id " +personnageId);
-        }
+        Personnage personnage = findById(personnageId);
+        // appel de la zone.
+        personnage.setZone(zoneService.findById(zoneId).orElseThrow(() -> new EntityNotFoundException("Aucune zone pour l'id " +zoneId)));
+        return Optional.ofNullable(updatePersonnage(personnage));
     }
 
     @Override
     @Transactional
     public Optional<Personnage> updateCaracteristique(Long personnageId, Caracteristique caracteristique) {
 
-        Optional<Personnage> personnage = findById(personnageId);
-        if (personnage.isPresent()) {
-           personnage.get().setCaracteristique(caracteristique);
-           return Optional.ofNullable(updatePersonnage(personnage.get()));
-        } else {
-            throw new EntityNotFoundException("Aucun personnage pour l'id " +personnageId);
-        }
+        Personnage personnage = findById(personnageId);
+       personnage.setCaracteristique(caracteristique);
+       return Optional.ofNullable(updatePersonnage(personnage));
     }
     public Personnage updatePersonnage(Personnage personnage) {
         return this.personnageRepository.save(personnage);

@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface RessourceService {
 
-    public Optional<Ressource> findById(Long ressourceId);
+    public Ressource findById(Long ressourceId);
 }

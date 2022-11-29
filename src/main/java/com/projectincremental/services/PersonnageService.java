@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface PersonnageService {
 
     Optional<List<Personnage>> findAll();
-    Optional<Personnage> findById(Long personnageId);
+    Personnage findById(Long personnageId);
     Optional<Personnage> updateZone(Long personnageId, Long zoneId);
 
     Optional<Personnage> updateCaracteristique(Long personnageId, Caracteristique caracteristique);
