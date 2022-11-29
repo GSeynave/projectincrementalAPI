@@ -8,7 +8,6 @@ import com.projectincremental.entities.InventaireConsommable;
 import com.projectincremental.entities.InventaireEquipement;
 import com.projectincremental.entities.InventaireRessource;
 import com.projectincremental.services.InventaireService;
-import com.projectincremental.services.impl.InventaireServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

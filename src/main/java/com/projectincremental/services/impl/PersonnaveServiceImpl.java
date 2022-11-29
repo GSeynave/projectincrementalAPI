@@ -49,6 +49,7 @@ public class PersonnaveServiceImpl implements PersonnageService {
 
         Personnage personnage = findById(personnageId);
        personnage.setCaracteristique(caracteristique);
+       // Recuperer toutes les caracteristiques des equipements.
        return Optional.ofNullable(updatePersonnage(personnage));
     }
     public Personnage updatePersonnage(Personnage personnage) {
