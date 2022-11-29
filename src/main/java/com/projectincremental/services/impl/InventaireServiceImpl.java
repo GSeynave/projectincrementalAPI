@@ -40,6 +40,8 @@ public class InventaireServiceImpl implements InventaireService {
     private PersonnageService personnageService;
     @Autowired
     private EquipementService equipementService;
+    @Autowired
+    private ConsommableService consommableService;
 
     @Autowired
     private InventaireRessourceMapper inventaireRessourceMapper;
@@ -129,4 +131,25 @@ public class InventaireServiceImpl implements InventaireService {
         }
     }
 
+    @Override
+    @Transactional
+    public Optional<InventaireConsommable> updateInventaireConsommable(long consommableID, long quantite) {
+
+        Long compteId = 1L;
+        Compte compte = compteService.findById(compteId);
+
+        Optional<InventaireConsommable> inventaireConsommable = inventaireConsommableRepository.findByCompteIdAndConsommableId(compte.getId(), consommableID);
+
+        if (inventaireConsommable.isPresent()) {
+            inventaireConsommable.get().setQuantite(inventaireConsommable.get().getQuantite() + quantite);
+            return Optional.ofNullable(inventaireConsommableRepository.save(inventaireConsommable.get()));
+        } else {
+            Consommable consommable = consommableService.findById(consommableID);
+            InventaireConsommable inventaire = new InventaireConsommable();
+            inventaire.setConsommable(consommable);
+            inventaire.setCompte(compte);
+            inventaire.setQuantite(quantite);
+            return Optional.ofNullable(inventaireConsommableRepository.save(inventaire));
+        }
+    }
 }

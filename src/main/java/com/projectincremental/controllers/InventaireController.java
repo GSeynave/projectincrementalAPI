@@ -1,12 +1,10 @@
 package com.projectincremental.controllers;
 
-import com.projectincremental.dtos.ErrorMessage;
-import com.projectincremental.dtos.InventaireDto;
-import com.projectincremental.dtos.InventaireEquipementDto;
-import com.projectincremental.dtos.InventaireRessourceDto;
+import com.projectincremental.dtos.*;
 import com.projectincremental.dtos.mappers.InventaireConsommableMapper;
 import com.projectincremental.dtos.mappers.InventaireEquipementMapper;
 import com.projectincremental.dtos.mappers.InventaireRessourceMapper;
+import com.projectincremental.entities.InventaireConsommable;
 import com.projectincremental.entities.InventaireEquipement;
 import com.projectincremental.entities.InventaireRessource;
 import com.projectincremental.services.InventaireService;
@@ -75,10 +73,23 @@ public class InventaireController {
     public ResponseEntity<InventaireEquipementDto> updateInventaireEquipement(@PathVariable("equipementId") long equipementId,
                                                               @PathVariable("personnageId") long personnageId,
                                                               @PathVariable("quantite") long quantite) {
-        logger.info("Accessing api/inventaires/equipements/" +equipementId +"/quantite/" +quantite);
+        logger.info("Accessing api/inventaires/equipements/" +equipementId +"/personnages/" +personnageId +"quantite/" +quantite);
         Optional<InventaireEquipement> inventaireEquipement = inventaireService.updateInventaireEquipement(equipementId, personnageId, quantite);
         InventaireEquipementDto inventaireEquipementDto = inventaireEquipement.map(inventaireEquipementMapper::toDto).orElseThrow(() -> new EntityNotFoundException("Inventory not found"));
         return new ResponseEntity<>(inventaireEquipementDto, HttpStatus.OK);
     }
-
+    @ApiOperation(value = "Request to update consummable inventory")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 404, message = "Inventory not found"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class)
+    })
+    @PutMapping("/consommables/{consommableId}/quantite/{quantite}")
+    public ResponseEntity<InventaireConsommableDto> updateInventaireEquipement(@PathVariable("consommableId") long consommableId,
+                                                                              @PathVariable("quantite") long quantite) {
+        logger.info("Accessing api/inventaires/consommables/" +consommableId +"/quantite/" +quantite);
+        Optional<InventaireConsommable> inventaireConsommable = inventaireService.updateInventaireConsommable(consommableId, quantite);
+        InventaireConsommableDto inventaireConsommableDto = inventaireConsommable.map(inventaireConsommableMapper::toDto).orElseThrow(() -> new EntityNotFoundException("Inventory not found"));
+        return new ResponseEntity<>(inventaireConsommableDto, HttpStatus.OK);
+    }
 }

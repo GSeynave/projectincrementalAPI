@@ -10,7 +10,6 @@ public interface InventaireEquipementRepository extends JpaRepository<Inventaire
 
     Optional<List<InventaireEquipement>> findAllByCompteId(Long compteId);
 
-    InventaireEquipement save(InventaireEquipement equipement);
 
     Optional<InventaireEquipement> findByCompteIdAndPersonnageIdAndEquipementId(Long id, Long id1, long equipementId);
 }
