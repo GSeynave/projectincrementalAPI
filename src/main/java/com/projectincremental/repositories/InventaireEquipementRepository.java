@@ -8,8 +8,9 @@ import java.util.Optional;
 
 public interface InventaireEquipementRepository extends JpaRepository<InventaireEquipement, Long> {
 
-    Optional<List<InventaireEquipement>> findAllByCompteId(Long compteId);
+    Optional<List<InventaireEquipement>> findAllByUserId(Long userId);
 
+    Optional<InventaireEquipement> findByUserIdAndPersonnageIdAndEquipementId(Long userUd, Long personnageId, long equipementId);
 
-    Optional<InventaireEquipement> findByCompteIdAndPersonnageIdAndEquipementId(Long id, Long id1, long equipementId);
+    Optional<List<InventaireEquipement>> findByPersonnageId(long personnageId);
 }

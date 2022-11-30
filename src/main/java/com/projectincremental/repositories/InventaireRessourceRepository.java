@@ -9,8 +9,8 @@ import java.util.Optional;
 @org.springframework.stereotype.Repository
 public interface InventaireRessourceRepository extends JpaRepository<InventaireRessource, Long> {
 
-    Optional<List<InventaireRessource>> findAllByCompteId(Long compteId);
+    Optional<List<InventaireRessource>> findAllByUserId(Long userId);
 
 
-    Optional<InventaireRessource> findByCompteIdAndRessourceId(Long id, long ressourceId);
+    Optional<InventaireRessource> findByUserIdAndRessourceId(Long userId, long ressourceId);
 }

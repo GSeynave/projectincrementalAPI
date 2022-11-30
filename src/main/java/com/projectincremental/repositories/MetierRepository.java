@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface MetierRepository extends JpaRepository<Metier, Long> {
 
-    public Optional<List<Metier>> findAllByCompteId(long compteId);
+    public Optional<List<Metier>> findAllByUserId(long userId);
 
 }

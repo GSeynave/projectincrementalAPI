@@ -9,8 +9,8 @@ public class InventaireConsommable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "compte_id", nullable = false)
-    private Compte compte;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "consommable_id", nullable = false)
@@ -26,12 +26,12 @@ public class InventaireConsommable {
         this.id = id;
     }
 
-    public Compte getCompte() {
-        return compte;
+    public User getUser() {
+        return user;
     }
 
-    public void setCompte(Compte compte) {
-        this.compte = compte;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Consommable getConsommable() {

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface PersonnageRepository extends JpaRepository<Personnage, Long> {
 
-    Optional<List<Personnage>> findAllByCompteId(Long compteId);
+    Optional<List<Personnage>> findAllByUserId(Long userId);
     Optional<Personnage> findById(Long personnageId);
 }

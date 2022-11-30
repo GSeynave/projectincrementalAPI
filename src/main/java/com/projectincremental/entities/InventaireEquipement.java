@@ -9,8 +9,8 @@ public class InventaireEquipement {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "compte_id")
-    private Compte compte;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "equipement_id")
@@ -30,12 +30,12 @@ public class InventaireEquipement {
         this.id = id;
     }
 
-    public Compte getCompte() {
-        return compte;
+    public User getUser() {
+        return user;
     }
 
-    public void setCompte(Compte compte) {
-        this.compte = compte;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Equipement getEquipement() {

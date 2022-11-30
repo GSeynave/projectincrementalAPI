@@ -14,4 +14,6 @@ public interface PersonnageService {
     Optional<Personnage> updateZone(Long personnageId, Long zoneId);
 
     Optional<Personnage> updateCaracteristique(Long personnageId, Caracteristique caracteristique);
+
+    Caracteristique getCaracteristiqueEquipements(long personnageId);
 }

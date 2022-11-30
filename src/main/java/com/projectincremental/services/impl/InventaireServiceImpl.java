@@ -16,11 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +33,7 @@ public class InventaireServiceImpl implements InventaireService {
     @Autowired
     private RessourceService ressourceService;
     @Autowired
-    private CompteService compteService;
+    private UserServiceImpl userService;
     @Autowired
     private PersonnageService personnageService;
     @Autowired
@@ -51,7 +49,7 @@ public class InventaireServiceImpl implements InventaireService {
     private InventaireConsommableMapper inventaireConsommableMapper;
     @Override
     public InventaireDto getInvetaire() {
-        Long compteId = 1l;
+        Long userId = 1l;
         InventaireDto inventaireDto = new InventaireDto();
         inventaireDto.setInventaireRessources(getInventaireRessources());
         inventaireDto.setInventaireEquipements(getInventaireEquipements());
@@ -60,24 +58,24 @@ public class InventaireServiceImpl implements InventaireService {
     }
 
     private List<InventaireRessourceDto> getInventaireRessources() {
-        Long compteId = 1l;
-        Optional<List<InventaireRessource>> inventaireRessources = this.inventaireRessourceRepository.findAllByCompteId(compteId);
+        Long userId = 1l;
+        Optional<List<InventaireRessource>> inventaireRessources = this.inventaireRessourceRepository.findAllByUserId(userId);
         if (inventaireRessources.isPresent()) {
             return inventaireRessources.get().stream().map(inventaireRessourceMapper::toDto).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }
     private List<InventaireEquipementDto> getInventaireEquipements() {
-        Long compteId = 1l;
-        Optional<List<InventaireEquipement>> inventaireEquipements = this.inventaireEquipementRepository.findAllByCompteId(compteId);
+        Long userId = 1l;
+        Optional<List<InventaireEquipement>> inventaireEquipements = this.inventaireEquipementRepository.findAllByUserId(userId);
         if (inventaireEquipements.isPresent()) {
             return inventaireEquipements.get().stream().map(inventaireEquipementMapper::toDto).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }
     private List<InventaireConsommableDto> getInventaireConsommables() {
-        Long compteId = 1l;
-        Optional<List<InventaireConsommable>> inventaireConsommables = this.inventaireConsommableRepository.findAllByCompteId(compteId);
+        Long userId = 1l;
+        Optional<List<InventaireConsommable>> inventaireConsommables = this.inventaireConsommableRepository.findAllByUserId(userId);
         if (inventaireConsommables.isPresent()) {
             return inventaireConsommables.get().stream().map(inventaireConsommableMapper::toDto).collect(Collectors.toList());
         }
@@ -88,10 +86,10 @@ public class InventaireServiceImpl implements InventaireService {
     @Transactional
     public Optional<InventaireRessource> updateInventaireRessource(long ressourceId, long quantite) {
 
-        Long compteId = 1L;
-        Compte compte = compteService.findById(compteId);
+        Long userId = 1L;
+        User user = userService.findById(userId);
 
-        Optional<InventaireRessource> inventaireRessource = inventaireRessourceRepository.findByCompteIdAndRessourceId(compte.getId(), ressourceId);
+        Optional<InventaireRessource> inventaireRessource = inventaireRessourceRepository.findByUserIdAndRessourceId(user.getId(), ressourceId);
 
         if (inventaireRessource.isPresent()) {
             inventaireRessource.get().setQuantite(inventaireRessource.get().getQuantite() + quantite);
@@ -100,7 +98,7 @@ public class InventaireServiceImpl implements InventaireService {
             Ressource ressource = ressourceService.findById(ressourceId);
             InventaireRessource inventaire = new InventaireRessource();
             inventaire.setRessource(ressource);
-            inventaire.setCompte(compte);
+            inventaire.setUser(user);
             inventaire.setQuantite(quantite);
             return Optional.ofNullable(inventaireRessourceRepository.save(inventaire));
         }
@@ -110,12 +108,12 @@ public class InventaireServiceImpl implements InventaireService {
     @Transactional
     public Optional<InventaireEquipement> updateInventaireEquipement(long equipementId, long personnageId, long quantite) {
 
-        Long compteId = 1L;
-        Compte compte = compteService.findById(compteId);
+        Long userId = 1L;
+        User user = userService.findById(userId);
 
         Personnage personnage = personnageService.findById(personnageId);
 
-        Optional<InventaireEquipement> inventaireEquipement = inventaireEquipementRepository.findByCompteIdAndPersonnageIdAndEquipementId(compte.getId(), personnage.getId(), equipementId);
+        Optional<InventaireEquipement> inventaireEquipement = inventaireEquipementRepository.findByUserIdAndPersonnageIdAndEquipementId(user.getId(), personnage.getId(), equipementId);
 
         if (inventaireEquipement.isPresent()) {
             inventaireEquipement.get().setQuantite(inventaireEquipement.get().getQuantite() + quantite);
@@ -124,7 +122,7 @@ public class InventaireServiceImpl implements InventaireService {
             Equipement equipement = equipementService.findById(equipementId);
             InventaireEquipement inventaire = new InventaireEquipement();
             inventaire.setEquipement(equipement);
-            inventaire.setCompte(compte);
+            inventaire.setUser(user);
             inventaire.setPersonnage(personnage);
             inventaire.setQuantite(quantite);
             return Optional.ofNullable(inventaireEquipementRepository.save(inventaire));
@@ -135,10 +133,10 @@ public class InventaireServiceImpl implements InventaireService {
     @Transactional
     public Optional<InventaireConsommable> updateInventaireConsommable(long consommableID, long quantite) {
 
-        Long compteId = 1L;
-        Compte compte = compteService.findById(compteId);
+        Long userId = 1L;
+        User user = userService.findById(userId);
 
-        Optional<InventaireConsommable> inventaireConsommable = inventaireConsommableRepository.findByCompteIdAndConsommableId(compte.getId(), consommableID);
+        Optional<InventaireConsommable> inventaireConsommable = inventaireConsommableRepository.findByUserIdAndConsommableId(user.getId(), consommableID);
 
         if (inventaireConsommable.isPresent()) {
             inventaireConsommable.get().setQuantite(inventaireConsommable.get().getQuantite() + quantite);
@@ -147,9 +145,14 @@ public class InventaireServiceImpl implements InventaireService {
             Consommable consommable = consommableService.findById(consommableID);
             InventaireConsommable inventaire = new InventaireConsommable();
             inventaire.setConsommable(consommable);
-            inventaire.setCompte(compte);
+            inventaire.setUser(user);
             inventaire.setQuantite(quantite);
             return Optional.ofNullable(inventaireConsommableRepository.save(inventaire));
         }
+    }
+
+    @Override
+    public Optional<List<InventaireEquipement>> findByPersonnageId(long personnageId) {
+        return inventaireEquipementRepository.findByPersonnageId(personnageId);
     }
 }

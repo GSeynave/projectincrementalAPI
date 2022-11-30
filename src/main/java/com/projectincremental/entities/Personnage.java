@@ -20,8 +20,8 @@ public class Personnage {
 	@OneToMany(mappedBy = "personnage")
 	private Set<InventaireEquipement> inventaireEquipements;
 	@ManyToOne
-	@JoinColumn(name = "compte_id", nullable = false)
-	private Compte compte;
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -71,11 +71,11 @@ public class Personnage {
 		this.inventaireEquipements = inventaireEquipements;
 	}
 
-	public Compte getCompte() {
-		return compte;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCompte(Compte compte) {
-		this.compte = compte;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

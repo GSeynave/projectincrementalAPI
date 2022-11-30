@@ -54,7 +54,8 @@ public class PersonnageController {
             return new ResponseEntity<>(personnages.get()
                     .stream()
                     .map(personnageMapper::toDto)
-                    .collect(Collectors.toList()), HttpStatus.OK);
+                    .collect(Collectors.toList())
+                    , HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Aucun personnage trouve");
         }

@@ -5,7 +5,8 @@ public class PersonnageDto {
     private Long id;
     private String nom;
     private Long niveau;
-    private CaracteristiqueDto caracteristique;
+    private CaracteristiqueDto caracteristiquePersonnage;
+    private CaracteristiqueDto caracteristiqueEquipement;
     private ZoneDto zone;
 
     public Long getId() {
@@ -32,12 +33,20 @@ public class PersonnageDto {
         this.niveau = niveau;
     }
 
-    public CaracteristiqueDto getCaracteristique() {
-        return caracteristique;
+    public CaracteristiqueDto getCaracteristiquePersonnage() {
+        return caracteristiquePersonnage;
     }
 
-    public void setCaracteristique(CaracteristiqueDto caracteristique) {
-        this.caracteristique = caracteristique;
+    public void setCaracteristiquePersonnage(CaracteristiqueDto caracteristiquePersonnage) {
+        this.caracteristiquePersonnage = caracteristiquePersonnage;
+    }
+
+    public CaracteristiqueDto getCaracteristiqueEquipement() {
+        return caracteristiqueEquipement;
+    }
+
+    public void setCaracteristiqueEquipement(CaracteristiqueDto caracteristiqueEquipement) {
+        this.caracteristiqueEquipement = caracteristiqueEquipement;
     }
 
     public ZoneDto getZone() {

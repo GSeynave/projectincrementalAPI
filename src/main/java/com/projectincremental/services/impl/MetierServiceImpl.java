@@ -19,9 +19,9 @@ public class MetierServiceImpl implements MetierService {
 
     @Override
     public List<Metier> getMetiers() {
-        long compteId = 1l;
-        return metierRepository.findAllByCompteId(compteId)
-                .orElseThrow(() -> new EntityNotFoundException("Aucun metier pour le compte id " +compteId));
+        long userId = 1l;
+        return metierRepository.findAllByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Aucun metier pour le user id " +userId));
     }
 
     @Override
