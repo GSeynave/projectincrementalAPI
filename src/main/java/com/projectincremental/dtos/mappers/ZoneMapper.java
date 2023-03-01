@@ -1,17 +1,16 @@
 package com.projectincremental.dtos.mappers;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.projectincremental.documents.ZoneDocument;
 import com.projectincremental.dtos.ZoneDto;
-import com.projectincremental.entities.Zone;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
-@Component
-public class ZoneMapper {
+@Mapper
+public interface ZoneMapper {
 
-    public ZoneDto toDto(Zone zone) {
-        ZoneDto dto = new ZoneDto();
-        dto.setId(zone.getId());
-        dto.setNom(zone.getNom());
-        return dto;
-    }
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "nom", target = "nom")
+	@Mapping(source = "monstres", target = "monstres")
+	public ZoneDto zoneToZoneDto(ZoneDocument zone);
 }

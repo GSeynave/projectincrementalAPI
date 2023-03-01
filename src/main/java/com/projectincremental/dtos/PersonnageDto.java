@@ -2,18 +2,16 @@ package com.projectincremental.dtos;
 
 public class PersonnageDto {
 
-    private Long id;
+	private String id;
     private String nom;
     private Long niveau;
-    private CaracteristiqueDto caracteristiquePersonnage;
-    private CaracteristiqueDto caracteristiqueEquipement;
-    private ZoneDto zone;
+	private String nomZone;
 
-    public Long getId() {
+	public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+	public void setId(String id) {
         this.id = id;
     }
 
@@ -33,27 +31,12 @@ public class PersonnageDto {
         this.niveau = niveau;
     }
 
-    public CaracteristiqueDto getCaracteristiquePersonnage() {
-        return caracteristiquePersonnage;
-    }
+	public String getNomZone() {
+		return nomZone;
+	}
 
-    public void setCaracteristiquePersonnage(CaracteristiqueDto caracteristiquePersonnage) {
-        this.caracteristiquePersonnage = caracteristiquePersonnage;
-    }
+	public void setNomZone(String nomZone) {
+		this.nomZone = nomZone;
+	}
 
-    public CaracteristiqueDto getCaracteristiqueEquipement() {
-        return caracteristiqueEquipement;
-    }
-
-    public void setCaracteristiqueEquipement(CaracteristiqueDto caracteristiqueEquipement) {
-        this.caracteristiqueEquipement = caracteristiqueEquipement;
-    }
-
-    public ZoneDto getZone() {
-        return zone;
-    }
-
-    public void setZone(ZoneDto zone) {
-        this.zone = zone;
-    }
 }

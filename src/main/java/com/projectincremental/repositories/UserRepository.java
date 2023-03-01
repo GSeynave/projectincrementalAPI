@@ -1,13 +1,12 @@
 package com.projectincremental.repositories;
 
-import com.projectincremental.entities.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-    public Optional<User> findById(Long userId);
+import com.projectincremental.documents.UserDocument;
 
-    public Optional<User> findByUsername(String username);
+public interface UserRepository extends MongoRepository<UserDocument, Long> {
+
+	Optional<UserDocument> findById(String userId);
 }

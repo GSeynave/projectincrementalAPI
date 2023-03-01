@@ -1,12 +1,11 @@
 package com.projectincremental.services;
 
-import com.projectincremental.entities.Zone;
-
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+import com.projectincremental.documents.ZoneDocument;
+
 public interface ZoneService {
-    List<Zone> findAll();
-    Optional<Zone> findById(Long id);
+    List<ZoneDocument> findAll();
+    Optional<ZoneDocument> findById(Long id);
 }

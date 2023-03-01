@@ -1,11 +1,7 @@
 package com.projectIncremental.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.projectincremental.dtos.MonstreDto;
-import com.projectincremental.ProjectIncrementalApplication;
-import com.projectincremental.controllers.MonstreController;
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +16,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.List;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.projectincremental.ProjectIncrementalApplication;
+import com.projectincremental.dtos.MonstreDto;
 
 @SpringBootTest(classes = ProjectIncrementalApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MonstreControllerTest {
@@ -35,14 +35,11 @@ public class MonstreControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private MonstreController monstreController;
 
     @BeforeEach
     public void setUp() {
         mapper = new ObjectMapper().registerModule(new JavaTimeModule());
-        mockMvc = MockMvcBuilders.standaloneSetup(monstreController)
-                .build();
+		mockMvc = MockMvcBuilders.standaloneSetup(monstreController).build();
     }
 
     @Test

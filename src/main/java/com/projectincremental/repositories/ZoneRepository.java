@@ -1,15 +1,16 @@
 package com.projectincremental.repositories;
 
-import com.projectincremental.entities.Zone;
-import org.springframework.data.repository.Repository;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ZoneRepository extends Repository<Zone, Long> {
+import com.projectincremental.documents.ZoneDocument;
 
-	List<Zone> findAll();
-	Optional<Zone> findById(Long zoneId);
+
+public interface ZoneRepository extends MongoRepository<ZoneDocument, Long> {
+
+	List<ZoneDocument> findAll();
+	Optional<ZoneDocument> findById(Long zoneId);
 
 }

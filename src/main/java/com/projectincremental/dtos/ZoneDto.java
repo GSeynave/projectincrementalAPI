@@ -1,15 +1,20 @@
 package com.projectincremental.dtos;
 
+import java.util.List;
+
+import com.projectincremental.documents.Monstre;
+
 public class ZoneDto {
 
-    private Long id;
+	private String id;
     private String nom;
+	private List<Monstre> monstres;
 
-    public Long getId() {
+	public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+	public void setId(String id) {
         this.id = id;
     }
 
@@ -20,4 +25,13 @@ public class ZoneDto {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+	public List<Monstre> getMonstres() {
+		return monstres;
+	}
+
+	public void setMonstres(List<Monstre> monstres) {
+		this.monstres = monstres;
+	}
+
 }

@@ -1,7 +1,7 @@
 package com.projectIncremental.services;
 
 import com.projectincremental.ProjectIncrementalApplication;
-import com.projectincremental.entities.Zone;
+import com.projectincremental.documents.ZoneDocument;
 import com.projectincremental.services.ZoneService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class ZoneServiceTest {
         Long zoneId = 1L;
 
         // WHEN
-        Optional<Zone> zone = this.zoneService.findById(zoneId);
+        Optional<ZoneDocument> zone = this.zoneService.findById(zoneId);
 
         // THEN
         Assertions.assertThat(zone.isPresent()).isTrue();
@@ -33,7 +33,7 @@ class ZoneServiceTest {
     void findAll() {
         // GIVEN
         // WHEN
-        List<Zone> zones = this.zoneService.findAll();
+        List<ZoneDocument> zones = this.zoneService.findAll();
 
         // THEN
         Assertions.assertThat(zones).isNotNull();

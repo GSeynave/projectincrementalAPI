@@ -1,17 +1,21 @@
 package com.projectincremental.dtos.mappers;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.projectincremental.documents.UserDocument;
 import com.projectincremental.dtos.UserDto;
-import com.projectincremental.entities.User;
-import org.springframework.stereotype.Component;
 
-@Component
-public class UserMapper {
+@Mapper(uses = PersonnageMapper.class)
+public interface UserMapper {
 
-    public User toEntity(UserDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setMail(userDto.getMail());
-        user.setPassword(userDto.getPassword());
-        return user;
-    }
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "username", target = "username")
+	@Mapping(source = "personnages", target = "personnages")
+	public UserDto userToUserDto(UserDocument user);
+
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "username", target = "username")
+	@Mapping(source = "personnages", target = "personnages")
+	public UserDto userDtoToUser(UserDto userDto);
 }

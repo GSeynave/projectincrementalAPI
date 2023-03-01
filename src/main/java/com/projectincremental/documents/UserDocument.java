@@ -1,15 +1,19 @@
-package com.projectincremental.dtos;
+package com.projectincremental.documents;
 
 import java.util.List;
 
-import com.projectincremental.documents.Personnage;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-public class UserDto {
+@Document("user")
+public class UserDocument {
 
+	@MongoId(FieldType.OBJECT_ID)
 	private String id;
+
 	private String username;
 	private List<Personnage> personnages;
-    private ZoneDto zone;
 
 	public String getId() {
 		return id;
@@ -33,14 +37,6 @@ public class UserDto {
 
 	public void setPersonnages(List<Personnage> personnages) {
 		this.personnages = personnages;
-	}
-
-	public ZoneDto getZone() {
-		return zone;
-	}
-
-	public void setZone(ZoneDto zone) {
-		this.zone = zone;
 	}
 
 }

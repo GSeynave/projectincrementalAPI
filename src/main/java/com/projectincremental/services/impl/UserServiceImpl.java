@@ -1,43 +1,58 @@
 package com.projectincremental.services.impl;
 
-import com.projectincremental.entities.SecurityUser;
-import com.projectincremental.entities.User;
-import com.projectincremental.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import java.util.Objects;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.projectincremental.documents.UserDocument;
+import com.projectincremental.exceptions.EntityNotFoundException;
+import com.projectincremental.repositories.UserRepository;
+import com.projectincremental.services.UserService;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	public UserServiceImpl(UserRepository userRepository, MongoOperations operations) {
+		super();
+		this.userRepository = userRepository;
+		this.operations = operations;
+	}
 
-    public User findById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Aucun user pour l'id " +userId));
-    }
+	private final UserRepository userRepository;
+	private final MongoOperations operations;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(SecurityUser::new)
-                .orElseThrow(() -> new UsernameNotFoundException("Aucun user pour le username " +username));
+	public UserDocument findById(String userId) {
+		return userRepository.findById(userId)
+				.orElseThrow(() -> new EntityNotFoundException("Aucun user pour l'id " + userId));
     }
 
-    public void createUser(User user) {
-        if (findByUsername(user.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists " +user.getUsername());
-        }
-        userRepository.save(user);
-    }
+	@Override
+	@Transactional
+	public UserDocument updatePersonnageZone(String userId, String nomPersonnage, String nomZone) {
 
-    private Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+		UserDocument userDocument = findUserByIdAndNom(userId, nomPersonnage);
+		if (!Objects.nonNull(userDocument)) {
+			throw new EntityNotFoundException("Aucun personnage " + nomPersonnage + " pour le userId " + userId);
+		}
+		userDocument.getPersonnages().forEach(personnage -> {
+			if (personnage.getNom().equals(nomPersonnage)) {
+				personnage.setNomZone(nomZone);
+			}
+		});
+
+		return userRepository.save(userDocument);
+	}
+
+	@Transactional
+	private UserDocument findUserByIdAndNom(String userId, String nom) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("id").is(userId).and("personnages.nom").is(nom));
+		query.limit(1);
+		return operations.findOne(query, UserDocument.class);
+	}
 }
