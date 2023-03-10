@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projectincremental.documents.UserDocument;
 import com.projectincremental.dtos.ErrorMessage;
 import com.projectincremental.dtos.UserDto;
-import com.projectincremental.dtos.mappers.PersonnageMapper;
 import com.projectincremental.dtos.mappers.UserMapper;
 import com.projectincremental.exceptions.EntityNotFoundException;
 import com.projectincremental.services.UserService;
@@ -33,16 +32,15 @@ public class UserController {
 
 	Logger logger = LoggerFactory.getLogger(UserController.class);
 	private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
-	private final PersonnageMapper personnageMapper = Mappers.getMapper(PersonnageMapper.class);
 	@Autowired
 	private UserService userService;
 
-	@ApiOperation(value = "Request all personnages")
+	@ApiOperation(value = "Request user by id")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 404, message = "Personnage not found"),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class) })
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getUser(@PathVariable(required = true) String userId) {
+	public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
 		logger.info("Accessing api/users/{}", userId);
 
 		UserDocument user = userService.findById(userId);

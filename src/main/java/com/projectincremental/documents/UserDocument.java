@@ -2,24 +2,24 @@ package com.projectincremental.documents;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document("user")
 public class UserDocument {
 
-	@MongoId(FieldType.OBJECT_ID)
-	private String id;
+	@Id
+	private ObjectId id;
 
 	private String username;
 	private List<Personnage> personnages;
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

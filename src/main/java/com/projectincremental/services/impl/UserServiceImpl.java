@@ -2,7 +2,8 @@ package com.projectincremental.services.impl;
 
 import java.util.Objects;
 
-import org.springframework.data.mongodb.core.MongoOperations;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,18 @@ import com.projectincremental.services.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	public UserServiceImpl(UserRepository userRepository, MongoOperations operations) {
+	public UserServiceImpl(UserRepository userRepository, MongoTemplate mongoTemplate) {
 		super();
 		this.userRepository = userRepository;
-		this.operations = operations;
+		this.mongoTemplate = mongoTemplate;
 	}
 
 	private final UserRepository userRepository;
-	private final MongoOperations operations;
+	private final MongoTemplate mongoTemplate;
 
     @Override
 	public UserDocument findById(String userId) {
-		return userRepository.findById(userId)
-				.orElseThrow(() -> new EntityNotFoundException("Aucun user pour l'id " + userId));
+		return mongoTemplate.findById(new ObjectId(userId), UserDocument.class);
     }
 
 	@Override
@@ -53,6 +53,6 @@ public class UserServiceImpl implements UserService {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("id").is(userId).and("personnages.nom").is(nom));
 		query.limit(1);
-		return operations.findOne(query, UserDocument.class);
+		return mongoTemplate.findOne(query, UserDocument.class);
 	}
 }
