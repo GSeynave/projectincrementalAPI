@@ -7,4 +7,6 @@ import com.projectincremental.documents.ZoneDocument;
 
 public interface ZoneRepository extends MongoRepository<ZoneDocument, Long> {
 
+	ZoneDocument findByNom(String nom);
+
 }

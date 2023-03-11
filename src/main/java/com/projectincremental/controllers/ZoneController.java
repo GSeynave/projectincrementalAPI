@@ -1,6 +1,7 @@
 package com.projectincremental.controllers;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.mapstruct.factory.Mappers;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/zones", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ZoneController {
@@ -45,6 +49,21 @@ public class ZoneController {
 		if (zones.size() > 0) {
 			List<ZoneDto> zonesDto = zones.stream().map(zoneMapper::zoneToZoneDto).collect(Collectors.toList());
 			return new ResponseEntity<>(zonesDto, HttpStatus.OK);
+		} else {
+			throw new EntityNotFoundException("Aucunes zone n'a ete trouvee");
+		}
+	}
+
+	@ApiOperation(value = "Retrieve a zone by it's name")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Success"), @ApiResponse(code = 404, message = "Zone not found"),
+			@ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class) })
+	@GetMapping("/{nom}")
+	public ResponseEntity<ZoneDto> getZoneByNom(@PathVariable String nom) {
+		logger.info("Accessing api/zones/{nom}");
+		ZoneDocument zone = this.zoneService.findByNom(nom);
+		if (Objects.nonNull(zone)) {
+			ZoneDto zoneDto = zoneMapper.zoneToZoneDto(zone);
+			return new ResponseEntity<>(zoneDto, HttpStatus.OK);
 		} else {
 			throw new EntityNotFoundException("Aucunes zone n'a ete trouvee");
 		}

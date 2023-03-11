@@ -1,7 +1,6 @@
 package com.projectincremental.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class ZoneServiceImpl implements ZoneService {
 	}
 
     @Override
-    public Optional<ZoneDocument> findById(Long zoneId) {
-        return this.zoneRepository.findById(zoneId);
+	public ZoneDocument findByNom(String nom) {
+		return this.zoneRepository.findByNom(nom);
     }
 }
