@@ -35,6 +35,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public AuthenticationResponse register(RegisterRequest request) {
 		UserDocument user = new UserDocument();
 		user.setEmail(request.getEmail());
+		user.setUsername(request.getUsername());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.setRole(Role.USER);
 		userRepository.save(user);
@@ -45,8 +46,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public AuthenticationResponse authenticate(AuthenticationRequest request) {
 		authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-		UserDocument user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+		UserDocument user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 		String jwtToken = jwtTokenUtil.generateToken(user);
 		return new AuthenticationResponse(jwtToken);
 	}
