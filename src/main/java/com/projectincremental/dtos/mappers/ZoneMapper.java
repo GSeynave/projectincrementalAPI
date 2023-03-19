@@ -3,8 +3,8 @@ package com.projectincremental.dtos.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.projectincremental.documents.ZoneDocument;
 import com.projectincremental.dtos.ZoneDto;
+import com.projectincremental.models.ZoneDocument;
 
 @Mapper
 public interface ZoneMapper {

@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectincremental.documents.ZoneDocument;
 import com.projectincremental.dtos.ErrorMessage;
 import com.projectincremental.dtos.ZoneDto;
 import com.projectincremental.dtos.mappers.ZoneMapper;
 import com.projectincremental.exceptions.EntityNotFoundException;
+import com.projectincremental.models.ZoneDocument;
 import com.projectincremental.services.ZoneService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(path = "/zones", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "api/v1/zones", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ZoneController {
 
 	private final Logger logger = LoggerFactory.getLogger(ZoneController.class);

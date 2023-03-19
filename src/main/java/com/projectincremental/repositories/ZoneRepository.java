@@ -2,7 +2,7 @@ package com.projectincremental.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.projectincremental.documents.ZoneDocument;
+import com.projectincremental.models.ZoneDocument;
 
 
 public interface ZoneRepository extends MongoRepository<ZoneDocument, Long> {

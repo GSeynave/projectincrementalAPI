@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.projectincremental.documents.UserDocument;
 import com.projectincremental.exceptions.EntityNotFoundException;
+import com.projectincremental.models.UserDocument;
 import com.projectincremental.repositories.UserRepository;
 import com.projectincremental.services.UserService;
 
@@ -55,4 +55,6 @@ public class UserServiceImpl implements UserService {
 		query.limit(1);
 		return mongoTemplate.findOne(query, UserDocument.class);
 	}
+
+
 }

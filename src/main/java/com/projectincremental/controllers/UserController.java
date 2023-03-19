@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectincremental.documents.UserDocument;
 import com.projectincremental.dtos.ErrorMessage;
 import com.projectincremental.dtos.UserDto;
 import com.projectincremental.dtos.mappers.UserMapper;
 import com.projectincremental.exceptions.EntityNotFoundException;
+import com.projectincremental.models.UserDocument;
 import com.projectincremental.services.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "api/v1/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
 	Logger logger = LoggerFactory.getLogger(UserController.class);

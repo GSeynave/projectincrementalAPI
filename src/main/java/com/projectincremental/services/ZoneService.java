@@ -2,7 +2,7 @@ package com.projectincremental.services;
 
 import java.util.List;
 
-import com.projectincremental.documents.ZoneDocument;
+import com.projectincremental.models.ZoneDocument;
 
 public interface ZoneService {
     List<ZoneDocument> findAll();

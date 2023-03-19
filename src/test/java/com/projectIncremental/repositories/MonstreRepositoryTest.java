@@ -1,9 +1,10 @@
 package com.projectIncremental.repositories;
 
 import com.projectincremental.ProjectIncrementalApplication;
-import com.projectincremental.documents.Monstre;
-import com.projectincremental.documents.ZoneDocument;
+import com.projectincremental.models.Monstre;
+import com.projectincremental.models.ZoneDocument;
 import com.projectincremental.repositories.MonstreRepository;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,9 @@
 package com.projectIncremental.services;
 
 import com.projectincremental.ProjectIncrementalApplication;
-import com.projectincremental.documents.ZoneDocument;
+import com.projectincremental.models.ZoneDocument;
 import com.projectincremental.services.ZoneService;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

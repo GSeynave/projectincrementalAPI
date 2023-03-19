@@ -1,6 +1,6 @@
 package com.projectincremental.services;
 
-import com.projectincremental.documents.UserDocument;
+import com.projectincremental.models.UserDocument;
 
 public interface UserService {
 

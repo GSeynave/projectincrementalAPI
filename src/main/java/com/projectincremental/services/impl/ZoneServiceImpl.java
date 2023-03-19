@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.projectincremental.documents.ZoneDocument;
+import com.projectincremental.models.ZoneDocument;
 import com.projectincremental.repositories.ZoneRepository;
 import com.projectincremental.services.ZoneService;
 

@@ -1,4 +1,4 @@
-package com.projectincremental.documents;
+package com.projectincremental.models;
 
 public class Personnage {
 

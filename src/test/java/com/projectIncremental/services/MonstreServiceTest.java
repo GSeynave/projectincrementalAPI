@@ -1,8 +1,9 @@
 package com.projectIncremental.services;
 
 import com.projectincremental.ProjectIncrementalApplication;
-import com.projectincremental.documents.Monstre;
+import com.projectincremental.models.Monstre;
 import com.projectincremental.services.MonstreService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

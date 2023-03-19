@@ -2,7 +2,7 @@ package com.projectincremental.dtos;
 
 import java.util.List;
 
-import com.projectincremental.documents.Monstre;
+import com.projectincremental.models.Monstre;
 
 public class ZoneDto {
 
