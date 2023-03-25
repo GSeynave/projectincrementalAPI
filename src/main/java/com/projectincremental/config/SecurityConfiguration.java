@@ -25,12 +25,12 @@ public class SecurityConfiguration {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeHttpRequests().antMatchers("/api/v1/auth/register", "/api/v1/auth/authenticate")
-				.permitAll().anyRequest()
-				.authenticated()
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.permitAll().anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider)
+				.cors(cors -> cors.disable())
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-		
+
 		return http.build();
 	}
 

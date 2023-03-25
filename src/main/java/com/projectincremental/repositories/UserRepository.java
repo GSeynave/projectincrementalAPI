@@ -9,4 +9,6 @@ import com.projectincremental.models.UserDocument;
 public interface UserRepository extends MongoRepository<UserDocument, Long> {
 
 	Optional<UserDocument> findByUsername(String username);
+
+	Optional<UserDocument> findByEmail(String email);
 }

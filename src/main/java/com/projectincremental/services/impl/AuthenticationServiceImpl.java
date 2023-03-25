@@ -33,14 +33,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public AuthenticationResponse register(RegisterRequest request) {
-		UserDocument user = new UserDocument();
-		user.setEmail(request.getEmail());
-		user.setUsername(request.getUsername());
-		user.setPassword(passwordEncoder.encode(request.getPassword()));
-		user.setRole(Role.USER);
-		userRepository.save(user);
-		String jwtToken = jwtTokenUtil.generateToken(user);
-		return new AuthenticationResponse(jwtToken);
+		if (userRepository.findByEmail(request.getEmail()).isEmpty()) {
+			UserDocument user = new UserDocument();
+			user.setEmail(request.getEmail());
+			user.setUsername(request.getUsername());
+			user.setPassword(passwordEncoder.encode(request.getPassword()));
+			user.setRole(Role.USER);
+			userRepository.save(user);
+			String jwtToken = jwtTokenUtil.generateToken(user);
+			return new AuthenticationResponse(jwtToken);
+		}
+		// throw apiException + custom message;
+		System.out.println("already exist");
+		return null;
 	}
 
 	@Override
