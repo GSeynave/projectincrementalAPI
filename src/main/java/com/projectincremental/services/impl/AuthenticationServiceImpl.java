@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			user.setRole(Role.USER);
 			userRepository.save(user);
 			String jwtToken = jwtTokenUtil.generateToken(user);
-			return new AuthenticationResponse(jwtToken);
+			return new AuthenticationResponse(jwtToken, user.getId().toString());
 		}
 		// throw apiException + custom message;
 		System.out.println("already exist");
@@ -54,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 		UserDocument user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 		String jwtToken = jwtTokenUtil.generateToken(user);
-		return new AuthenticationResponse(jwtToken);
+		return new AuthenticationResponse(jwtToken, user.getId().toString());
 	}
 
 }

@@ -36,9 +36,8 @@ export default {
     methods: {
         async initGame() {
             if (localStorage.authToken != null && localStorage.username != null) {
-                this.isLogged = true;
+                    this.isLogged = true;
             }
-            // check if token in storage, if yes check if still valid, if yes -> isLogged = true, else nothing
             if (this.isLogged) {
                 await UserService.getUserById("63fb2dcbe2aaed3be96b392c").then((response) => {
                     this.user = response;
