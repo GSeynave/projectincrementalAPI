@@ -10,6 +10,7 @@ public class UserDto {
 
 	private ObjectId id;
 	private String username;
+	private String email;
 	private List<Personnage> personnages;
 
 	public ObjectId getId() {
@@ -18,6 +19,14 @@ public class UserDto {
 
 	public void setId(ObjectId id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {

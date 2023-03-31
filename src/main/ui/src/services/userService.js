@@ -7,8 +7,8 @@ class UserService {
         this.url = process.env.VUE_APP_URL + '/api/v1/users';
     }
     
-    getUserById(id)  {
-        var path = this.url +`/${id}`;
+    getUserByUsername(username)  {
+        var path = this.url +`/${username}`;
         var headers = authService.getHeaders();
         return new Promise(function(resolve, reject) {
             axios.get(path, headers).then(

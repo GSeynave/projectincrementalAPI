@@ -37,15 +37,15 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@ApiOperation(value = "Request user by id")
+	@ApiOperation(value = "Request user by username")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 404, message = "Personnage not found"),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class) })
-	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
-		logger.info("Accessing api/users/{}", userId);
+	@GetMapping("/{username}")
+	public ResponseEntity<UserDto> getUser(@PathVariable String username) {
+		logger.info("Accessing api/users/{}", username);
 
-		UserDocument user = userService.findById(userId);
+		UserDocument user = userService.findByUsername(username);
 		if (Objects.nonNull(user)) {
 			return new ResponseEntity<>(mapper.userToUserDto(user), HttpStatus.OK);
 		} else {

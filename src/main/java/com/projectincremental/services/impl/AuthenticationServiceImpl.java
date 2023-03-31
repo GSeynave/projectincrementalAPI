@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.projectincremental.config.JwtService;
+import com.projectincremental.exceptions.ContentAlreadyExistException;
 import com.projectincremental.models.AuthenticationRequest;
 import com.projectincremental.models.AuthenticationResponse;
 import com.projectincremental.models.RegisterRequest;
@@ -32,8 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public AuthenticationResponse register(RegisterRequest request) {
-		if (userRepository.findByEmail(request.getEmail()).isEmpty()) {
+	public AuthenticationResponse register(RegisterRequest request) throws ContentAlreadyExistException {
+		if (userRepository.findByUsername(request.getUsername()).isEmpty()) {
 			UserDocument user = new UserDocument();
 			user.setEmail(request.getEmail());
 			user.setUsername(request.getUsername());
@@ -43,9 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			String jwtToken = jwtTokenUtil.generateToken(user);
 			return new AuthenticationResponse(jwtToken, user.getId().toString());
 		}
-		// throw apiException + custom message;
-		System.out.println("already exist");
-		return null;
+		throw new ContentAlreadyExistException("Username already used.");
 	}
 
 	@Override

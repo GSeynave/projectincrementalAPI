@@ -56,5 +56,11 @@ public class UserServiceImpl implements UserService {
 		return mongoTemplate.findOne(query, UserDocument.class);
 	}
 
-
+	@Transactional
+	public UserDocument findByUsername(String username) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("username").is(username));
+		query.limit(1);
+		return mongoTemplate.findOne(query, UserDocument.class);
+	}
 }

@@ -14,13 +14,16 @@ class LoginService {
             axios.post(path, registerForm, headers).then(
                 (response) => {
                     var result = response.data;
+                    console.log('getting result from api');
                     resolve(result);
                 },
                 (error) => {
+                    console.log('getting error from api');
                     reject(error);
                 });
         });
     }
+
     authenticate(username, password) {
         var path = this.url + '/authenticate';
         var headers = authService.getHeaders();

@@ -26,11 +26,13 @@
         <input class="button" type="button" @click="isRegistered()" value="Log in">
     </div>
 
+    <div v-if="this.error">{{this.error.message}}</div>
+
 </template>
 
 <script>
 
-    import LoginService from "../services/loginService"
+import LoginService from "../services/loginService"
 
     export default {
         data() {
@@ -38,19 +40,25 @@
                 hasAccount: true,
                 username: "",
                 password: "",
-                email: ""
+                email: "",
+                error: {}
             }
         },
+        props: ['isLogged'],
+        emits: ['update:isLogged'],
         methods: {
             onRegister() {
                 
                 let registerForm = {username: this.username, password: this.password, email: this.email};
                 console.log(registerForm);
-                LoginService.register(registerForm).then((response) => {
-                    console.log(response);
-                    localStorage.authToken = response.token;
+                LoginService.register(registerForm).then((res) => {
+                    console.log(res);
+                    localStorage.authToken = res.token;
                     localStorage.username = this.username;
-                    window.location.reload();
+                    location.reload();
+                }).catch((err) => {
+                    console.log('error while register', err);
+                    this.error = err;
                 });
             },
             onLogin() {
@@ -59,7 +67,10 @@
                     console.log(response);
                     localStorage.authToken = response.token;
                     localStorage.username = this.username;
-                    window.location.reload();
+                    location.reload();
+                }).catch((err) => {
+                    console.log('error while login', err);
+                    this.error = err;
                 });
             },
             isRegistered() {
