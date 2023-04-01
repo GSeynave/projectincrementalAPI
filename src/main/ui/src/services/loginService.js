@@ -1,43 +1,46 @@
-import axios from "axios"
-import authService from "./authService"
+import axios from "axios";
+import authService from "./authService";
 
 class LoginService {
+  constructor() {
+    this.url = process.env.VUE_APP_URL + "/api/v1/auth";
+  }
 
-    constructor() {
-        this.url = process.env.VUE_APP_URL + '/api/v1/auth';
-    }
-    
-    register(registerForm)  {
-        var path = this.url +`/register`;
-        var headers = authService.getHeaders();
-        return new Promise(function(resolve, reject) {
-            axios.post(path, registerForm, headers).then(
-                (response) => {
-                    var result = response.data;
-                    console.log('getting result from api');
-                    resolve(result);
-                },
-                (error) => {
-                    console.log('getting error from api');
-                    reject(error);
-                });
-        });
-    }
+  register(registerForm) {
+    var path = this.url + `/register`;
+    var headers = authService.getHeaders();
+    return new Promise(function (resolve, reject) {
+      axios.post(path, registerForm, headers).then(
+        (response) => {
+          var result = response.data;
+          console.log("getting result from api");
+          resolve(result);
+        },
+        (error) => {
+          console.log("getting error from api", error.response);
 
-    authenticate(username, password) {
-        var path = this.url + '/authenticate';
-        var headers = authService.getHeaders();
-        var body = { 'username': username, 'password': password };
-        return new Promise(function(resolve, reject) {
-            axios.post(path, body, headers).then(
-                (response) => {
-                    var result = response.data; resolve(result);
-                },
-                (error) => {
-                    reject(error);
-                });
-        });
-    }
+          reject(error.response);
+        }
+      );
+    });
+  }
+
+  authenticate(username, password) {
+    var path = this.url + "/authenticate";
+    var headers = authService.getHeaders();
+    var body = { username: username, password: password };
+    return new Promise(function (resolve, reject) {
+      axios.post(path, body, headers).then(
+        (response) => {
+          var result = response.data;
+          resolve(result);
+        },
+        (error) => {
+          reject(error.response);
+        }
+      );
+    });
+  }
 }
 
 export default new LoginService();
