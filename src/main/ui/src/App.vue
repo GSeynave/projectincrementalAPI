@@ -1,16 +1,33 @@
 <template>
+  <nav class="navbar" v-if="isLogged">
+    <ul>
+      <li class="navbar-item">WebIncremental<span class="rpgtag">RPG</span></li>
+      <li class="navbar-item"></li>
+      <li class="navbar-item">Character</li>
+      <li class="navbar-item">Inventory</li>
+      <li class="navbar-item">Crafts</li>
+      <li class="navbar-item">Farm</li>
+      <li>
+        <button @click="logout">Logout</button>
+      </li>
+    </ul>
+  </nav>
   <div v-if="isLogged">
-    <button @click="logout">Logout</button>
-    <HomePage
-      v-if="this.isLogged && this.user"
-      v-bind:user="this.user"
-      @set-personnage-zone="setPersonnageZone"
-    ></HomePage>
-    <CombatPage
-      v-if="this.isLogged && this.user && this.user.personnages && this.zone"
-      v-bind:user="this.user"
-      v-bind:zone="this.zone"
-    ></CombatPage>
+    <div class="component">
+      <HomePage
+        v-if="this.isLogged && this.user"
+        v-bind:user="this.user"
+        @set-personnage-zone="setPersonnageZone"
+      ></HomePage>
+    </div>
+    <div class="component">
+      <CombatPage
+        class="component"
+        v-if="this.isLogged && this.user && this.user.personnages && this.zone"
+        v-bind:user="this.user"
+        v-bind:zone="this.zone"
+      ></CombatPage>
+    </div>
   </div>
   <div v-else>
     <LoginPage v-model:isLogged="this.isLogged"></LoginPage>
@@ -93,12 +110,43 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: #616161;
+  color: #e0e0ca;
+}
+.rpgtag {
+  color: #cad8e0;
+}
+
+.navbar {
+  border-bottom: solid;
+  border-width: 3px;
+  border-color: #848e94;
+}
+
+.navbar > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.navbar-item:first-child {
+  font-weight: bold;
+  flex-grow: 6;
+}
+.navbar-item:not(:first-child) {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  flex-grow: 1;
+}
+.navbar-item:hover:not(:first-child) {
+  background-color: #656565;
+}
+
+.component {
+  padding: 2em;
+  border: solid;
+  border-width: 3px;
+  border-color: #848e94;
 }
 </style>

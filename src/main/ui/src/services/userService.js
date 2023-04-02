@@ -52,6 +52,7 @@ class UserService {
           resolve(result);
         },
         (error) => {
+          console.log(error);
           reject(this.getError(error.response));
         }
       );
