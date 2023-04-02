@@ -1,5 +1,6 @@
 package com.projectincremental.controllers;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.mapstruct.factory.Mappers;
@@ -12,10 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectincremental.dtos.Character;
 import com.projectincremental.dtos.ErrorMessage;
 import com.projectincremental.dtos.UserDto;
 import com.projectincremental.dtos.mappers.UserMapper;
@@ -50,6 +54,24 @@ public class UserController {
 			return new ResponseEntity<>(mapper.userToUserDto(user), HttpStatus.OK);
 		} else {
 			throw new EntityNotFoundException("Aucun user trouve");
+		}
+	}
+
+	@ApiOperation(value = "Creation of characters")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Success"),
+			@ApiResponse(code = 204, message = "Personnage user updated"),
+			@ApiResponse(code = 404, message = "No user found"),
+			@ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class) })
+	@PostMapping("/{username}/createcharacters")
+	public ResponseEntity<UserDto> createCharacters(@PathVariable(required = true) String username,
+			@RequestBody List<Character> characters) {
+		logger.info("Accessing api/users/{}/createCharacters {}", username, characters.toString());
+
+		UserDocument userDocument = userService.createCharacters(username, characters);
+		if (Objects.nonNull(userDocument)) {
+			return new ResponseEntity<>(mapper.userToUserDto(userDocument), HttpStatus.OK);
+		} else {
+			throw new EntityNotFoundException("Error whilde updating personnage zone");
 		}
 	}
 

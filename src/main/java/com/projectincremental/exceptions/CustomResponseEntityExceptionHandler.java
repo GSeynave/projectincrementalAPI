@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.projectincremental.dtos.ErrorMessage;
 
+import io.jsonwebtoken.ExpiredJwtException;
+
 
 @RestControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -41,6 +43,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	@ResponseBody
 	public ErrorMessage handleErrors(AuthenticationException e) {
+		logger.info(new StringBuilder().append("Error : ").append(e.getMessage()));
+		return new ErrorMessage(e.getMessage(), "401");
+	}
+
+	@ExceptionHandler(ExpiredJwtException.class)
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	@ResponseBody
+	public ErrorMessage handleErrors(ExpiredJwtException e) {
 		logger.info(new StringBuilder().append("Error : ").append(e.getMessage()));
 		return new ErrorMessage(e.getMessage(), "401");
 	}

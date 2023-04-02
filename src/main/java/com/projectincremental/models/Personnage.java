@@ -1,10 +1,13 @@
 package com.projectincremental.models;
 
+import com.projectincremental.models.enums.CharacterClasses;
+
 public class Personnage {
 
 	private String nom;
 	private Long niveau;
 	private String nomZone;
+	private CharacterClasses classe;
 	
 	public String getNom() {
 		return nom;
@@ -28,6 +31,14 @@ public class Personnage {
 
 	public void setNomZone(String nomZone) {
 		this.nomZone = nomZone;
+	}
+
+	public CharacterClasses getClasse() {
+		return classe;
+	}
+
+	public void setClasse(CharacterClasses classe) {
+		this.classe = classe;
 	}
 
 }

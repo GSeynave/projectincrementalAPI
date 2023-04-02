@@ -3,15 +3,17 @@
 
   <h2 v-if="user">Bienvenue {{ user.username }}</h2>
 
-  <h3>Zones</h3>
+  <div v-if="user && user.personnages">
+    <h3>Zones</h3>
 
-  <p v-if="user && user.personnages">
-    Votre personnage <b>{{ user.personnages[0].nom }}</b> est actuellement dans
-    la zone <b>{{ user.personnages[0].nomZone }}</b>
-  </p>
+    <p>
+      Votre personnage <b>{{ user.personnages[0].nom }}</b> est actuellement
+      dans la zone <b>{{ user.personnages[0].nomZone }}</b>
+    </p>
+  </div>
   <p v-else><CreateCharacter> </CreateCharacter></p>
 
-  <ul v-if="zones">
+  <ul v-if="zones && this.user.personnages">
     <li v-for="zone in zones" :key="zone.id">
       <button type="button" @click="$emit('setPersonnageZone', zone)">
         {{ zone.nom }}

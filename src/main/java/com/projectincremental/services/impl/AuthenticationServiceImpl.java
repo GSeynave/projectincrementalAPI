@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public AuthenticationResponse register(RegisterRequest request) throws ContentAlreadyExistException {
-		if (userRepository.findByUsername(request.getUsername()).isEmpty()) {
+		if (!userRepository.findByUsername(request.getUsername()).isPresent()) {
 			UserDocument user = new UserDocument();
 			user.setEmail(request.getEmail());
 			user.setUsername(request.getUsername());
@@ -54,6 +54,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		UserDocument user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 		String jwtToken = jwtTokenUtil.generateToken(user);
 		return new AuthenticationResponse(jwtToken, user.getId().toString());
+	}
+
+	@Override
+	public AuthenticationResponse refreshToken(String token) {
+		// todo : get usename from expired token, then generate new token.
+//		var userOptional = userRepository.findByUsername(username);
+//		if (userOptional.isPresent()) {
+//			var user = userOptional.get();
+//			userRepository.save(user);
+//			String jwtToken = jwtTokenUtil.generateToken(user);
+//			return new AuthenticationResponse(jwtToken, user.getId().toString());
+//		}
+		return null;
 	}
 
 }

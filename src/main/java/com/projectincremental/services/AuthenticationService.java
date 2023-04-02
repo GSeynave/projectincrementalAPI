@@ -9,4 +9,6 @@ public interface AuthenticationService {
 
 	AuthenticationResponse register(RegisterRequest request) throws ContentAlreadyExistException;
 	AuthenticationResponse authenticate(AuthenticationRequest request);
+
+	AuthenticationResponse refreshToken(String username);
 }
