@@ -18,8 +18,7 @@ class LoginService {
         },
         (error) => {
           console.log("getting error from api", error.response);
-
-          reject(error.response);
+          reject(this.getError(error));
         }
       );
     });
@@ -36,10 +35,19 @@ class LoginService {
           resolve(result);
         },
         (error) => {
-          reject(error.response);
+          reject(this.getError(error));
         }
       );
     });
+  }
+
+  getError(error) {
+    if (error.data.code == "1") {
+      this.localStore.clear();
+      location.reload();
+    } else {
+      return error;
+    }
   }
 }
 

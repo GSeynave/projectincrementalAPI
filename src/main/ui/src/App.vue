@@ -7,7 +7,7 @@
       @set-personnage-zone="setPersonnageZone"
     ></HomePage>
     <CombatPage
-      v-if="this.isLogged && this.user && this.zone"
+      v-if="this.isLogged && this.user && this.user.personnages && this.zone"
       v-bind:user="this.user"
       v-bind:zone="this.zone"
     ></CombatPage>

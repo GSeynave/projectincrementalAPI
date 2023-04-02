@@ -30,7 +30,7 @@ public class SecurityConfiguration {
 		http.csrf().disable()
 				.cors().configurationSource(corsConfigurationSource()).and()
 				.authorizeHttpRequests()
-				.antMatchers("/api/v1/auth/register", "/api/v1/auth/authenticate")
+				.antMatchers("/api/v1/auth/register", "/api/v1/auth/authenticate", "/api/v1/auth/refreshToken/**")
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider)

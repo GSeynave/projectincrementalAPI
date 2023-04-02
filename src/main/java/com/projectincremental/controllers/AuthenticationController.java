@@ -1,5 +1,7 @@
 package com.projectincremental.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +24,7 @@ import io.swagger.annotations.ApiResponses;
 public class AuthenticationController {
 	private final AuthenticationService service;
 
+	Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 	public AuthenticationController(AuthenticationService service) {
 		super();
 		this.service = service;
