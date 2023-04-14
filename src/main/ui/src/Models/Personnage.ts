@@ -1,12 +1,24 @@
+import Caracteristique from "./Caracteristique";
+
 class Personnage {
-  constructor(nom, niveau, nomZone, caracteristics) {
+  nom: string;
+  niveau: string;
+  nomZone: string;
+  caracteristic: Caracteristique;
+
+  constructor(
+    nom: string,
+    niveau: string,
+    nomZone: string,
+    caracteristic: Caracteristique
+  ) {
     this.nom = nom;
     this.niveau = niveau;
     this.nomZone = nomZone;
-    this.caracteristics = caracteristics;
+    this.caracteristic = caracteristic;
   }
 
-  set nomZone(nomZone) {
+  set nomZone(nomZone: string) {
     this.nomZone = nomZone;
   }
 }

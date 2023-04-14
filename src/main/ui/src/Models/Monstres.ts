@@ -1,6 +1,11 @@
+import Caracteristique from "./Caracteristique";
+
 class Monstre {
-  constructor(nom, caracteristics) {
+  nom: string;
+  caracteristics: Caracteristique;
+
+  constructor(nom: string, caracteristic: Caracteristique) {
     this.nom = nom;
-    this.caracteristiics = caracteristics;
+    this.caracteristic = caracteristic;
   }
 }

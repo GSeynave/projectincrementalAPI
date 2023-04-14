@@ -1,17 +1,23 @@
-class Zone {
-    constructor(id, nom, monstres) {
-        this.id = id;
-        this.nom = nom;
-        this.monstres = monstres;
-    }
+import Monstre from "./Monstre";
 
-    get id() {
-        return this.id;
-    }
-    get nom() {
-        return this.nom;
-    }
-    get monstres() {
-        return this.monstres;
-    }
+class Zone {
+  id: string;
+  nom: string;
+  monstres: Monstre[];
+
+  constructor(id: string, nom: string, monstres: Monstre[]) {
+    this.id = id;
+    this.nom = nom;
+    this.monstres = monstres;
+  }
+
+  get id(): string {
+    return this.id;
+  }
+  get nom(): string {
+    return this.nom;
+  }
+  get monstres(): string {
+    return this.monstres;
+  }
 }
