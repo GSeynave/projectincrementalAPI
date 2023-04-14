@@ -41,12 +41,13 @@ class UserService {
     });
   }
 
-  setPersonnageZone(userId, nomPersonnage, nomZone) {
-    var path =
-      this.url + `/${userId}/personnages/${nomPersonnage}/nomZone/${nomZone}`;
+  setPersonnageZone(username, nomPersonnage, nomZone) {
+    var path = this.url + `/${username}/personnages/${nomPersonnage}/nomZone`;
     var headers = authService.getHeaders();
+    var body = { nomZone: nomZone };
+    console.log(body);
     return new Promise(function (resolve, reject) {
-      axios.put(path, headers).then(
+      axios.patch(path, body, headers).then(
         (response) => {
           var result = response.data;
           resolve(result);

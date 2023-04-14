@@ -91,7 +91,7 @@ export default {
       if (this.user.personnages[0].nomZone != zone.nom) {
         this.user.personnages[0].nomZone = zone.nom;
         UserService.setPersonnageZone(
-          "63fb2dcbe2aaed3be96b392c",
+          localStorage.username,
           this.user.personnages[0].nom,
           zone.nom
         ).then((response) => {

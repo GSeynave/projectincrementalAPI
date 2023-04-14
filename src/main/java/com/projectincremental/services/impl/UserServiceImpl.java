@@ -37,11 +37,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserDocument updatePersonnageZone(String userId, String nomPersonnage, String nomZone) {
+	public UserDocument updatePersonnageZone(String username, String nomPersonnage, String nomZone) {
 
-		UserDocument userDocument = findUserByIdAndNom(userId, nomPersonnage);
+		UserDocument userDocument = findUserByUsernameAndNom(username, nomPersonnage);
 		if (!Objects.nonNull(userDocument)) {
-			throw new EntityNotFoundException("Aucun personnage " + nomPersonnage + " pour le userId " + userId);
+			throw new EntityNotFoundException("Aucun personnage " + nomPersonnage + " pour le username " + username);
 		}
 		userDocument.getPersonnages().forEach(personnage -> {
 			if (personnage.getNom().equals(nomPersonnage)) {
@@ -53,9 +53,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	private UserDocument findUserByIdAndNom(String userId, String nom) {
+	private UserDocument findUserByUsernameAndNom(String username, String nom) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("id").is(userId).and("personnages.nom").is(nom));
+		query.addCriteria(Criteria.where("username").is(username).and("personnages.nom").is(nom));
 		query.limit(1);
 		return mongoTemplate.findOne(query, UserDocument.class);
 	}

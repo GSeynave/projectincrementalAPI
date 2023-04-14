@@ -12,15 +12,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectincremental.dtos.Character;
 import com.projectincremental.dtos.ErrorMessage;
+import com.projectincremental.dtos.NomZoneDto;
 import com.projectincremental.dtos.UserDto;
 import com.projectincremental.dtos.mappers.UserMapper;
 import com.projectincremental.exceptions.EntityNotFoundException;
@@ -79,12 +80,14 @@ public class UserController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 404, message = "Personnage not found"),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorMessage.class) })
-	@PutMapping("/{userId}/personnages/{nomPersonnage}/nomZone/{nomZone}")
-	public ResponseEntity<UserDto> updateZone(@PathVariable(required = true) String userId,
-			@PathVariable(required = true) String nomPersonnage, @PathVariable(required = true) String nomZone) {
-		logger.info("Accessing api/users/{}/personnages/{}/nomZone/{}", userId, nomPersonnage, nomZone);
+	@PatchMapping("/{username}/personnages/{nomPersonnage}/nomZone")
+	public ResponseEntity<UserDto> updateZone(@PathVariable(required = true) String username,
+			@PathVariable(required = true) String nomPersonnage,
+			@RequestBody(required = true) NomZoneDto nomZone) {
+		logger.info("Accessing api/username/{}/personnages/{}/nomZone with nomZone {}", username, nomPersonnage,
+				nomZone);
 
-		UserDocument userDocument = userService.updatePersonnageZone(userId, nomPersonnage, nomZone);
+		UserDocument userDocument = userService.updatePersonnageZone(username, nomPersonnage, nomZone.getNomZone());
 		if (Objects.nonNull(userDocument)) {
 			return new ResponseEntity<>(mapper.userToUserDto(userDocument), HttpStatus.OK);
 		} else {
