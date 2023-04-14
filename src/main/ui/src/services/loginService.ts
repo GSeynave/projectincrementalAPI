@@ -7,12 +7,12 @@ class LoginService {
   }
 
   register(registerForm) {
-    var path = this.url + `/register`;
-    var headers = authService.getHeaders();
+    const path = this.url + `/register`;
+    const headers = authService.getHeaders();
     return new Promise(function (resolve, reject) {
       axios.post(path, registerForm, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           console.log("getting result from api");
           resolve(result);
         },
@@ -25,13 +25,13 @@ class LoginService {
   }
 
   authenticate(username, password) {
-    var path = this.url + "/authenticate";
-    var headers = authService.getHeaders();
-    var body = { username: username, password: password };
+    const path = this.url + "/authenticate";
+    const headers = authService.getHeaders();
+    const body = { username: username, password: password };
     return new Promise(function (resolve, reject) {
       axios.post(path, body, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           resolve(result);
         },
         (error) => {

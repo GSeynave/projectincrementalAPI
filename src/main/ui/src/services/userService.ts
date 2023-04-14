@@ -7,12 +7,12 @@ class UserService {
   }
 
   getUserByUsername(username) {
-    var path = this.url + `/${username}`;
-    var headers = authService.getHeaders();
+    const path = this.url + `/${username}`;
+    const headers = authService.getHeaders();
     return new Promise(function (resolve, reject) {
       axios.get(path, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           resolve(result);
         },
         (error) => {
@@ -24,13 +24,13 @@ class UserService {
   }
 
   createCharacters(username, characters) {
-    var path = this.url + `/${username}/createcharacters`;
-    var headers = authService.getHeaders();
+    const path = this.url + `/${username}/createcharacters`;
+    const headers = authService.getHeaders();
     console.log(characters);
     return new Promise(function (resolve, reject) {
       axios.post(path, characters, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           resolve(result);
         },
         (error) => {
@@ -42,14 +42,14 @@ class UserService {
   }
 
   setPersonnageZone(username, nomPersonnage, nomZone) {
-    var path = this.url + `/${username}/personnages/${nomPersonnage}/nomZone`;
-    var headers = authService.getHeaders();
-    var body = { nomZone: nomZone };
+    const path = this.url + `/${username}/personnages/${nomPersonnage}/nomZone`;
+    const headers = authService.getHeaders();
+    const body = { nomZone: nomZone };
     console.log(body);
     return new Promise(function (resolve, reject) {
       axios.patch(path, body, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           resolve(result);
         },
         (error) => {

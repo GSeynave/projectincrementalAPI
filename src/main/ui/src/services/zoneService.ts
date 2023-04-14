@@ -7,12 +7,12 @@ class ZoneService {
   }
 
   getZones() {
-    var path = this.url;
-    var headers = authService.getHeaders();
+    const path = this.url;
+    const headers = authService.getHeaders();
     return new Promise(function (resolve, reject) {
       axios.get(path, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           resolve(result);
         },
         (error) => {
@@ -23,12 +23,12 @@ class ZoneService {
   }
 
   getZoneByNom(nom) {
-    var path = this.url + `/${nom}`;
-    var headers = authService.getHeaders();
+    const path = this.url + `/${nom}`;
+    const headers = authService.getHeaders();
     return new Promise(function (resolve, reject) {
       axios.get(path, headers).then(
         (response) => {
-          var result = response.data;
+          const result = response.data;
           resolve(result);
         },
         (error) => {
