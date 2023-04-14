@@ -1,4 +1,4 @@
-package com.projectincremental.dtos;
+package com.projectincremental.models.dtos;
 
 import java.util.List;
 

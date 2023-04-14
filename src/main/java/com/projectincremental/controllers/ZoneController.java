@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectincremental.dtos.ErrorMessage;
-import com.projectincremental.dtos.ZoneDto;
 import com.projectincremental.dtos.mappers.ZoneMapper;
 import com.projectincremental.exceptions.EntityNotFoundException;
 import com.projectincremental.models.ZoneDocument;
+import com.projectincremental.models.dtos.ErrorMessage;
+import com.projectincremental.models.dtos.ZoneDto;
 import com.projectincremental.services.ZoneService;
 
 import io.swagger.annotations.ApiOperation;

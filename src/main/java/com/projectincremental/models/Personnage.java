@@ -8,7 +8,8 @@ public class Personnage {
 	private Long niveau;
 	private String nomZone;
 	private CharacterClasses classe;
-	
+	private Caracteristique caracteristique;
+
 	public String getNom() {
 		return nom;
 	}
@@ -41,4 +42,11 @@ public class Personnage {
 		this.classe = classe;
 	}
 
+	public Caracteristique getCaracteristique() {
+		return caracteristique;
+	}
+
+	public void setCaracteristique(Caracteristique caracteristique) {
+		this.caracteristique = caracteristique;
+	}
 }

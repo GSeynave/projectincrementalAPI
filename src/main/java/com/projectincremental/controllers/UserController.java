@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectincremental.dtos.Character;
-import com.projectincremental.dtos.ErrorMessage;
-import com.projectincremental.dtos.NomZoneDto;
-import com.projectincremental.dtos.UserDto;
 import com.projectincremental.dtos.mappers.UserMapper;
 import com.projectincremental.exceptions.EntityNotFoundException;
 import com.projectincremental.models.UserDocument;
+import com.projectincremental.models.dtos.Character;
+import com.projectincremental.models.dtos.ErrorMessage;
+import com.projectincremental.models.dtos.NomZoneDto;
+import com.projectincremental.models.dtos.UserDto;
 import com.projectincremental.services.UserService;
 
 import io.swagger.annotations.ApiOperation;

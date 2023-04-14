@@ -11,10 +11,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.projectincremental.dtos.Character;
 import com.projectincremental.exceptions.EntityNotFoundException;
+import com.projectincremental.models.Caracteristique;
 import com.projectincremental.models.Personnage;
 import com.projectincremental.models.UserDocument;
+import com.projectincremental.models.dtos.Character;
 import com.projectincremental.repositories.UserRepository;
 import com.projectincremental.services.UserService;
 
@@ -88,10 +89,18 @@ public class UserServiceImpl implements UserService {
 			personnage.setNom(character.getCharacterName());
 			personnage.setNomZone("Prairie du village");
 			personnage.setClasse(character.getClasse());
+			personnage.setCaracteristique(initCaracteristique());
 			personnages.add(personnage);
 		});
 
 		user.setPersonnages(personnages);
 		return userRepository.save(user);
+	}
+
+	private Caracteristique initCaracteristique() {
+		var caracteristique = new Caracteristique();
+		caracteristique.setVie(10d);
+		caracteristique.setDegat(2d);
+		return caracteristique;
 	}
 }

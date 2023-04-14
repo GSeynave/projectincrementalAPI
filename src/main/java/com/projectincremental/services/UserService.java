@@ -2,8 +2,8 @@ package com.projectincremental.services;
 
 import java.util.List;
 
-import com.projectincremental.dtos.Character;
 import com.projectincremental.models.UserDocument;
+import com.projectincremental.models.dtos.Character;
 
 public interface UserService {
 

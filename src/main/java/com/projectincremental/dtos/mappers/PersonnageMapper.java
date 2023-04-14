@@ -3,8 +3,8 @@ package com.projectincremental.dtos.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.projectincremental.dtos.PersonnageDto;
 import com.projectincremental.models.Personnage;
+import com.projectincremental.models.dtos.PersonnageDto;
 
 @Mapper(uses = ZoneMapper.class)
 public interface PersonnageMapper {

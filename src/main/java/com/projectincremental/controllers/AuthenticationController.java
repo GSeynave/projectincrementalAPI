@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectincremental.dtos.ErrorMessage;
 import com.projectincremental.exceptions.ContentAlreadyExistException;
 import com.projectincremental.models.AuthenticationRequest;
 import com.projectincremental.models.AuthenticationResponse;
 import com.projectincremental.models.RegisterRequest;
+import com.projectincremental.models.dtos.ErrorMessage;
 import com.projectincremental.services.AuthenticationService;
 
 import io.swagger.annotations.ApiOperation;

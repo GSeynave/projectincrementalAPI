@@ -1,6 +1,6 @@
 class Monstre {
-
-    constructor(nom) {
-        this.nom = nom;
-    }
+  constructor(nom, caracteristics) {
+    this.nom = nom;
+    this.caracteristiics = caracteristics;
+  }
 }

@@ -3,9 +3,10 @@ package com.projectIncremental.controllers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.projectincremental.dtos.ZoneDto;
 import com.projectincremental.ProjectIncrementalApplication;
 import com.projectincremental.controllers.ZoneController;
+import com.projectincremental.models.dtos.ZoneDto;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
