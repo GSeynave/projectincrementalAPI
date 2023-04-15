@@ -1,19 +1,22 @@
 import UserService from "./userService";
 import { Personnage } from "../Models/Personnage";
 class SaveService {
-  save(): void {
-    var save = {
+  saveGame(): void {
+    const save = {
       characters: UserService.getCharacters(),
     };
+    console.log("saving", save);
+    localStorage.setItem("save", JSON.stringify(save));
   }
 
-  load(): void {
-    var save = JSON.parse(localStorage.getItem("save") || "{}");
+  async loadGame(): Promise<void> {
+    const save = await JSON.parse(localStorage.getItem("save") || "{}");
+    console.log("saved get :", save);
     if (typeof save.characters !== "undefined")
       UserService.setCharacters(save.characters);
   }
 
-  delete(): void {
+  deleteGame(): void {
     localStorage.remoteItem("save");
   }
 }

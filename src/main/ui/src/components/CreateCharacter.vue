@@ -44,15 +44,7 @@ export default {
         characterName: this.characterName,
         classe: this.selectedClasse,
       };
-      userService
-        .createCharacters(localStorage.username, [characters])
-        .then((response) => {
-          console.log("character created :", response);
-          location.reload();
-        })
-        .catch((error) => {
-          console.log("error while creating :", error);
-        });
+      userService.createCharacters([characters]);
     },
   },
 };

@@ -9,10 +9,9 @@
       <li class="navbar-item">Farm</li>
     </ul>
   </nav>
-  <div>
+  <div v-if="characters.length > 0">
     <div class="component">
       <HomePage
-        v-if="characters"
         v-bind:characters="characters"
         @set-personnage-zone="setPersonnageZone"
       ></HomePage>
@@ -22,30 +21,37 @@
         class="component"
         v-if="characters && zone"
         v-bind:personnage="characters[0]"
-        v-bind:characters="zone"
+        v-bind:zone="zone"
       ></CombatPage>
     </div>
+  </div>
+  <div v-else>
+    <CreateCharacter></CreateCharacter>
   </div>
 </template>
 
 <script lang="ts">
 import HomePage from "./components/HomePage.vue";
 import CombatPage from "./components/CombatPage.vue";
+import CreateCharacter from "./components/CreateCharacter.vue";
 import UserService from "./services/userService";
 import ZoneService from "./services/zoneService";
+import SaveService from "./services/saveService";
 import { defineComponent } from "vue";
 import { Zone } from "./Models/Zone";
+import { Personnage } from "./Models/Personnage";
 
 export default defineComponent({
   name: "App",
   components: {
     HomePage,
     CombatPage,
+    CreateCharacter,
   },
   data() {
     return {
-      characters: UserService.getCharacters(),
-      zone: [],
+      characters: [] as Personnage[],
+      zone: new Zone(),
     };
   },
   created() {
@@ -53,7 +59,10 @@ export default defineComponent({
   },
   methods: {
     initGame() {
-      this.zone = ZoneService.getZoneByNom(this.characters[0].nomZone);
+      SaveService.loadGame().then();
+      this.characters = UserService.getCharacters();
+      if (this.characters.length > 0)
+        this.zone = ZoneService.getZoneByNom(this.characters[0].nomZone);
     },
     setPersonnageZone(zone: Zone) {
       console.log(

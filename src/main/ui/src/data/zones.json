@@ -1,98 +1,74 @@
 [
   {
-    "nom": "Le village",
+    "nom": "Zone A",
     "monstres": [
       {
-        "nom": "Rat d'egout",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "3.0"
-          },
-          "degat": {
-            "$numberDouble": "1.0"
-          }
+        "nom": "monstre A1",
+        "caracteristic": {
+          "maxVie": 3.0,
+          "vie": 3.0,
+          "degat": 1.0
         }
       },
       {
-        "nom": "Chien errant",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "2.0"
-          },
-          "degat": {
-            "$numberDouble": "2.0"
-          }
+        "nom": "monstre A2",
+        "caracteristic": {
+          "maxVie": 2.0,
+          "vie": 2.0,
+          "degat": 2.0
         }
       },
       {
-        "nom": "Araignee",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "8.0"
-          },
-          "degat": {
-            "$numberDouble": "0.2"
-          }
+        "nom": "monstre A3",
+        "caracteristic": {
+          "maxVie": 8.0,
+          "vie": 8.0,
+          "degat": 0.2
         }
       },
       {
-        "nom": "Chat mechant",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "20.0"
-          },
-          "degat": {
-            "$numberDouble": "1.0"
-          }
+        "nom": "monstre A4",
+        "caracteristic": {
+          "maxVie": 20.0,
+          "vie": 20.0,
+          "degat": 1.0
         }
       }
     ]
   },
   {
-    "nom": "Le village",
+    "nom": "Zone B",
     "monstres": [
       {
-        "nom": "Rat d'egout",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "3.0"
-          },
-          "degat": {
-            "$numberDouble": "1.0"
-          }
+        "nom": "monstre B1",
+        "caracteristic": {
+          "maxVie": 3.0,
+          "vie": 3.0,
+          "degat": 1.0
         }
       },
       {
-        "nom": "Chien errant",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "2.0"
-          },
-          "degat": {
-            "$numberDouble": "2.0"
-          }
+        "nom": "monstre B2",
+        "caracteristic": {
+          "maxVie": 2.0,
+          "vie": 2.0,
+          "degat": 2.0
         }
       },
       {
-        "nom": "Araignee",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "8.0"
-          },
-          "degat": {
-            "$numberDouble": "0.2"
-          }
+        "nom": "monstre B3",
+        "caracteristic": {
+          "maxVie": 8.0,
+          "vie": 8.0,
+          "degat": 0.2
         }
       },
       {
-        "nom": "Chat mechant",
-        "caracteristique": {
-          "vie": {
-            "$numberDouble": "20.0"
-          },
-          "degat": {
-            "$numberDouble": "1.0"
-          }
+        "nom": "monstre B4",
+        "caracteristic": {
+          "maxVie": 20.0,
+          "vie": 20.0,
+          "degat": 1.0
         }
       }
     ]

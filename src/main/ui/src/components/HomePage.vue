@@ -3,12 +3,12 @@
 
   <h2 v-if="user">Bienvenue {{ user.username }}</h2>
 
-  <div v-if="user && user.personnages">
+  <div v-if="characters">
     <h3>Zones</h3>
   </div>
   <p v-else><CreateCharacter> </CreateCharacter></p>
 
-  <ul v-if="zones && this.user.personnages" class="zones">
+  <ul v-if="zones && characters.length > 0" class="zones">
     <li v-for="zone in zones" :key="zone.id">
       <div class="zoneItem" @click="$emit('setPersonnageZone', zone)">
         <span class="nonZone">
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { Personnage } from "@/Models/Personnage";
 import ZoneService from "../services/zoneService";
 import CreateCharacter from "./CreateCharacter";
 
@@ -37,9 +36,7 @@ export default {
   components: {
     CreateCharacter,
   },
-  props: {
-    characters: Personnage,
-  },
+  props: ["characters"],
   emits: ["setPersonnageZone"],
   data() {
     return {
