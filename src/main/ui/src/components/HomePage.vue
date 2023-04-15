@@ -5,11 +5,6 @@
 
   <div v-if="user && user.personnages">
     <h3>Zones</h3>
-
-    <p>
-      Votre personnage <b>{{ user.personnages[0].nom }}</b> est actuellement
-      dans la zone <b>{{ user.personnages[0].nomZone }}</b>
-    </p>
   </div>
   <p v-else><CreateCharacter> </CreateCharacter></p>
 
@@ -34,26 +29,24 @@
 </template>
 
 <script>
+import { Personnage } from "@/Models/Personnage";
 import ZoneService from "../services/zoneService";
 import CreateCharacter from "./CreateCharacter";
+
 export default {
   components: {
     CreateCharacter,
   },
-  props: ["user"],
+  props: {
+    characters: Personnage,
+  },
   emits: ["setPersonnageZone"],
   data() {
     return {
-      zones: this.getZones(),
+      zones: ZoneService.getZones(),
     };
   },
-  methods: {
-    getZones() {
-      ZoneService.getZones().then((response) => {
-        this.zones = response;
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 <style>

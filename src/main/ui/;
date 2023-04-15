@@ -1,74 +1,114 @@
 <template>
-    <div v-if="isLogged">
+  <nav class="navbar" v-if="isLogged">
+    <ul>
+      <li class="navbar-item">WebIncremental<span class="rpgtag">RPG</span></li>
+      <li class="navbar-item"></li>
+      <li class="navbar-item">Character</li>
+      <li class="navbar-item">Inventory</li>
+      <li class="navbar-item">Crafts</li>
+      <li class="navbar-item">Farm</li>
+      <li>
         <button @click="logout">Logout</button>
-        <HomePage v-if="this.isLogged && this.user" v-bind:user="this.user" @set-personnage-zone="setPersonnageZone"></HomePage>
-        <CombatPage v-if="this.isLogged && this.user && this.zone" v-bind:user="this.user" v-bind:zone="this.zone"></CombatPage>
+      </li>
+    </ul>
+  </nav>
+  <div v-if="isLogged">
+    <div class="component">
+      <HomePage
+        v-if="isLogged && user"
+        v-bind:user="user"
+        @set-personnage-zone="setPersonnageZone"
+      ></HomePage>
     </div>
-    <div v-else>
-        <LoginPage></LoginPage>
+    <div class="component">
+      <CombatPage
+        class="component"
+        v-if="isLogged && user && user. && zone"
+        v-bind:user="user"
+        v-bind:zone="zone"
+      ></CombatPage>
     </div>
+  </div>
+  <div v-else>
+    <LoginPage v-model:isLogged="isLogged"></LoginPage>
+  </div>
 </template>
 
-<script>
-import HomePage from './components/HomePage.vue'
-import CombatPage from './components/CombatPage.vue'
-import UserService from "./services/userService"
-import ZoneService from "./services/zoneService"
-import LoginPage from "./components/LoginPage"
+<script lang="ts">
+import HomePage from "./components/HomePage.vue";
+import CombatPage from "./components/CombatPage.vue";
+import UserService from "./services/userService";
+import ZoneService from "./services/zoneService";
+import LoginPage from "./components/LoginPage.vue";
+import { defineComponent } from "vue";
 
-export default {
-    name: 'App',
-    components: {
-        HomePage,
-        CombatPage,
-        LoginPage
+export default defineComponent({
+  name: "App",
+  components: {
+    HomePage,
+    CombatPage,
+    LoginPage,
+  },
+  data() {
+    return {
+      user: new User(),
+      zone: new Zone(),
+      isLogged: false,
+    };
+  },
+  created() {
+    this.initGame();
+  },
+  methods: {
+    async initGame() {
+      if (
+        localStorage.authToken &&
+        localStorage.authToken != "undefined" &&
+        localStorage.username
+      ) {
+        this.isLogged = true;
+      } else {
+        localStorage.removeItem("authToken");
+      }
+      if (this.isLogged) {
+        await UserService.getUserByUsername(localStorage.username).then(
+          (response: any) => {
+            this.user = response;
+            ZoneService.getZoneByNom(this.user.personnages[0].nomZone).then(
+              (response: any) => {
+                this.zone = response;
+              }
+            );
+          }
+        );
+      }
     },
-    props: {
-
+    setPersonnageZone(zone: Zone) {
+      console.log(
+        "curent zone:",
+        this.user.personnages[0].nomZone,
+        "new zone ",
+        zone.nom
+      );
+      if (this.user.personnages[0].nomZone != zone.nom) {
+        this.user.personnages[0].nomZone = zone.nom;
+        UserService.setPersonnageZone(
+          localStorage.username,
+          this.user.personnages[0].nom,
+          zone.nom
+        ).then((response: any) => {
+          this.user = response;
+          this.zone = zone;
+        });
+      }
     },
-    data() {
-        return {
-            user: {},
-            zone: {},
-            isLogged: false
-        }
+    logout() {
+      console.log("clearing local");
+      window.localStorage.clear();
+      window.location.reload();
     },
-    created() {
-        this.initGame();
-    },
-    methods: {
-        async initGame() {
-            if (localStorage.authToken && localStorage.authToken != 'undefined' && localStorage.username) {
-                    this.isLogged = true;
-            } else {
-                localStorage.removeItem('authToken');
-            }
-            if (this.isLogged) {
-                await UserService.getUserByUsername(localStorage.username).then((response) => {
-                    this.user = response;
-                    ZoneService.getZoneByNom(this.user.personnages[0].nomZone).then((response) => {
-                        this.zone = response;
-                    });
-                });
-            }
-        },
-        setPersonnageZone(zone) {
-            console.log("curent zone:", this.user.personnages[0].nomZone, "new zone ", zone.nom);
-            if (this.user.personnages[0].nomZone != zone.nom) {
-                this.user.personnages[0].nomZone = zone.nom;
-                UserService.setPersonnageZone("63fb2dcbe2aaed3be96b392c", this.user.personnages[0].nom, zone.nom).then(response => {
-                    this.user = response;
-                    this.zone = zone;
-                })
-            }
-        },
-        logout() {
-            console.log("clearing local");
-            window.localStorage.clear();
-            window.location.reload();
-        }
-    },
-}
+  },
+});
 </script>
 
 <style>

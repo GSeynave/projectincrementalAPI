@@ -1,50 +1,21 @@
-import axios from "axios";
-import authService from "./authService";
-
+import { Zone } from "../Models/Zone";
 class ZoneService {
+  zones: Zone[] = [];
+  url: string;
   constructor() {
     this.url = process.env.VUE_APP_URL + "/api/v1/zones";
   }
 
-  getZones() {
-    const path = this.url;
-    const headers = authService.getHeaders();
-    return new Promise(function (resolve, reject) {
-      axios.get(path, headers).then(
-        (response) => {
-          const result = response.data;
-          resolve(result);
-        },
-        (error) => {
-          reject(this.getError(error.response));
-        }
-      );
-    });
+  getZones(): Zone[] {
+    return this.zones;
   }
 
-  getZoneByNom(nom) {
-    const path = this.url + `/${nom}`;
-    const headers = authService.getHeaders();
-    return new Promise(function (resolve, reject) {
-      axios.get(path, headers).then(
-        (response) => {
-          const result = response.data;
-          resolve(result);
-        },
-        (error) => {
-          reject(this.getError(error.response));
-        }
-      );
+  getZoneByNom(nom: string): Zone {
+    let result = new Zone();
+    this.zones.forEach(function (zone) {
+      if (zone.nom == nom) result = zone;
     });
-  }
-
-  getError(error) {
-    if (error.data.code == "1") {
-      this.localStore.clear();
-      location.reload();
-    } else {
-      return error;
-    }
+    return result;
   }
 }
 

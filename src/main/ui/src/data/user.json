@@ -1,0 +1,15 @@
+{
+  "personnages": [
+    {
+      "nom": "Terminator",
+      "niveau": { "$numberLong": "1" },
+      "nomZone": "Le village",
+      "classe": "Warrior",
+      "caracteristique": {
+        "vie": { "$numberDouble": "10.0" },
+        "degat": { "$numberDouble": "2.0" },
+        "maxVie": "10"
+      }
+    }
+  ]
+}

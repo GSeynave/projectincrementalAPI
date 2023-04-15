@@ -1,8 +1,5 @@
-class Caracteristic {
-  vie: double;
-  degat: double;
-  constructor(vie: double, degat: double) {
-    this.vie = vie;
-    this.degat = degat;
-  }
+export class Caracteristic {
+  maxVie: number = 0;
+  vie: number = 0;
+  degat: number = 0;
 }

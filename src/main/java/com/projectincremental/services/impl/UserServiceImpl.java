@@ -99,6 +99,7 @@ public class UserServiceImpl implements UserService {
 
 	private Caracteristique initCaracteristique() {
 		var caracteristique = new Caracteristique();
+		caracteristique.setMaxVie(10d);
 		caracteristique.setVie(10d);
 		caracteristique.setDegat(2d);
 		return caracteristique;

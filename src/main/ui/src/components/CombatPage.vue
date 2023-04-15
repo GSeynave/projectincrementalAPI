@@ -1,50 +1,51 @@
 <template>
-  <h3>Combat</h3>
-  <p v-if="this.zone && this.zone.monstres && this.monstre">
-    Vous etes actuellement en train de combattre {{ getMonstre().nom }}
-  </p>
-  <p>
-    <progress
-      id="progress-personnage"
-      v-bind:max="maxVie"
-      v-bind:value="currentPersonnage.caracteristique.vie"
-    ></progress>
-    Vous avez : {{ user.personnages[0].caracteristique.vie }} pv et vous infigez
-    {{ user.personnages[0].caracteristique.degat }} degats. test :
-    currentPersonnage.vie : {{ currentPersonnage.caracteristique.vie }},
-    getMaxVie :
-    {{ getMaxVie() }}
-  </p>
-  <button @click="doDamage(monstre, currentPersonne)">Get damage</button>
+  <div v-if="personnage && personnage.nom != ''">
+    <h3>Combat</h3>
+    <p v-if="this.zone && this.zone.monstres && this.monstre">
+      Vous etes actuellement en train de combattre {{ monstre.nom }}
+    </p>
+    <p>
+      <progress
+        id="progress-personnage"
+        v-bind:max="personnage.caracteristic.maxVie"
+        v-bind:value="personnage.caracteristic.vie"
+      ></progress>
+      Vous avez : {{ personnage.caracteristic.vie }} pv et vous infigez
+      {{ personnage.caracteristic.degat }} degats. test :
+      personnage.caracteristic.vie : {{ personnage.caracteristic.vie }},
+      <button @click="doDamage(monstre, personnage)">Get damage</button>
+    </p>
+  </div>
+
+  <div v-else>Loading...</div>
 </template>
 
 <script>
+import { Personnage } from "@/Models/Personnage";
+import { Zone } from "../Models/Zone";
+
 export default {
-  props: ["user", "zone"],
+  props: {
+    personnage: Personnage,
+    zone: Zone,
+  },
   data() {
     return {
-      monstre: this.getMonstre,
-      currentPersonnage: this.getPersonnage(),
-      maxVie: this.getMaxVie(),
+      monstre: this.getMonstre(),
+      maxVie: 0,
     };
   },
   methods: {
     getMonstre() {
-      console.log("get monstre", this.zone);
+      console.log("get monstre", this.personnage);
       if (this.zone && this.zone.monstres) {
         var index = Math.floor(Math.random() * this.zone.monstres.length);
       }
       this.monstre = this.zone.monstres[index];
       return this.monstre;
     },
-    getMaxVie() {
-      return this.user.personnages[0].caracteristique.vie;
-    },
-    getPersonnage() {
-      return this.user.personnages[0];
-    },
     doDamage(attacker, target) {
-      target.caracteristique.vie -= attacker.caracteristique.degat;
+      target.caracteristic.vie -= attacker.caracteristic.degat;
     },
   },
 };
