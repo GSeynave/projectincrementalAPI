@@ -32,6 +32,7 @@
 <script>
 import { Personnage } from "@/Models/Personnage";
 import { Zone } from "../Models/Zone";
+import inventoryService from "../services/inventoryService";
 
 export default {
   props: {
@@ -71,13 +72,20 @@ export default {
           this.monstre.caracteristic.vie -= this.personnage.caracteristic.degat;
           if (this.monstre.caracteristic.vie <= 0) {
             this.monstre.caracteristic.vie = 0;
+            this.getDrop(this.monstre.ressources);
             console.log("monstre tue.");
             this.monstre = this.getMonstre();
           }
-        }, 3 * 1000);
+        }, 1 * 1000);
       } else {
         clearInterval(this.battleInterval);
       }
+    },
+    getDrop(ressources) {
+      ressources.forEach(function (ressource) {
+        console.log("get drop")
+        inventoryService.addRessource(ressource, 1);
+      });
     },
   },
 };

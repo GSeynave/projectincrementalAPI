@@ -8,7 +8,15 @@
           "maxVie": 3.0,
           "vie": 3.0,
           "degat": 1.0
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre A1",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       },
       {
         "nom": "monstre A2",
@@ -16,7 +24,15 @@
           "maxVie": 2.0,
           "vie": 2.0,
           "degat": 2.0
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre A2",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       },
       {
         "nom": "monstre A3",
@@ -24,7 +40,15 @@
           "maxVie": 8.0,
           "vie": 8.0,
           "degat": 0.2
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre A3",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       },
       {
         "nom": "monstre A4",
@@ -32,7 +56,15 @@
           "maxVie": 20.0,
           "vie": 20.0,
           "degat": 1.0
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre A4",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       }
     ]
   },
@@ -45,7 +77,15 @@
           "maxVie": 3.0,
           "vie": 3.0,
           "degat": 1.0
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre B1",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       },
       {
         "nom": "monstre B2",
@@ -53,7 +93,15 @@
           "maxVie": 2.0,
           "vie": 2.0,
           "degat": 2.0
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre B2",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       },
       {
         "nom": "monstre B3",
@@ -61,7 +109,15 @@
           "maxVie": 8.0,
           "vie": 8.0,
           "degat": 0.2
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre B3",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       },
       {
         "nom": "monstre B4",
@@ -69,7 +125,15 @@
           "maxVie": 20.0,
           "vie": 20.0,
           "degat": 1.0
-        }
+        },
+        "ressources": [
+          {
+            "nom": "Ressource monstre B4",
+            "niveau": "1",
+            "rarete": "common",
+            "tauxDrop": 25
+          }
+        ]
       }
     ]
   }
