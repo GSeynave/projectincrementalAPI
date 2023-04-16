@@ -9,7 +9,7 @@
       <li class="navbar-item">Farm</li>
     </ul>
   </nav>
-  <div v-if="characters.length > 0">
+  <div v-if="characters.length > 0 && zone.nom != ''">
     <div class="component">
       <HomePage
         v-bind:characters="characters"
@@ -19,7 +19,6 @@
     <div class="component">
       <CombatPage
         class="component"
-        v-if="characters && zone"
         v-bind:personnage="characters[0]"
         v-bind:zone="zone"
       ></CombatPage>
@@ -51,11 +50,11 @@ export default defineComponent({
   data() {
     return {
       characters: [] as Personnage[],
-      zone: new Zone(),
+      zone: {} as Zone,
     };
   },
-  created() {
-    this.initGame();
+  async created() {
+    await this.initGame();
   },
   methods: {
     async initGame() {
@@ -65,11 +64,11 @@ export default defineComponent({
         this.characters = UserService.getCharacters();
         if (this.characters.length > 0)
           this.zone = ZoneService.getZoneByNom(this.characters[0].nomZone);
+        console.log("zone:", this.zone);
       }
     },
     setPersonnageZone(zone: Zone) {
       if (this.characters[0].nomZone !== zone.nom) {
-        console.log("st pesro zone", zone);
         let updatedCharacter: Personnage = UserService.setPersonnageZone(
           this.characters[0].nom,
           zone.nom

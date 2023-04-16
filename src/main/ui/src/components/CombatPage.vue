@@ -13,9 +13,16 @@
       ></progress>
       Vous avez : {{ personnage.caracteristic.vie }} pv et vous infigez
       {{ personnage.caracteristic.degat }} degats.
-      <button @click="doDamage()">Get damage</button>
+      <button @click="doBattle()">
+        Auto battle <span v-if="battle">ON</span><span v-else>OFF</span>
+      </button>
       {{ monstre.nom }} a : {{ monstre.caracteristic.vie }} pv et infige
       {{ monstre.caracteristic.degat }} degats.
+      <progress
+        id="progress-monstre"
+        v-bind:max="monstre.caracteristic.maxVie"
+        v-bind:value="monstre.caracteristic.vie"
+      ></progress>
     </p>
   </div>
 
@@ -28,19 +35,25 @@ import { Zone } from "../Models/Zone";
 
 export default {
   props: {
-    personnage: Personnage,
-    zone: Zone,
+    personnage: { type: Personnage },
+    zone: { type: Zone },
   },
   watch: {
     zone: function () {
+      console.log("get monstres");
       this.monstres = this.zone.monstres;
       this.monstre = this.getMonstre();
     },
+  },
+  created() {
+    clearInterval(this.battleInterval);
   },
   data() {
     return {
       monstres: [],
       monstre: this.getMonstre(),
+      battle: false,
+      battleInterval: {},
     };
   },
   methods: {
@@ -48,12 +61,23 @@ export default {
       if (this.monstres && this.monstres.length > 0) {
         const index = Math.floor(Math.random() * this.monstres.length);
         const monstre = this.monstres[index];
-        console.log("monstre", monstre);
         return (this.monstre = monstre);
       }
     },
-    doDamage() {
-      this.monstre.caracteristic.vie -= this.personnage.caracteristic.degat;
+    doBattle() {
+      this.battle = !this.battle;
+      if (this.battle) {
+        this.battleInterval = setInterval(() => {
+          this.monstre.caracteristic.vie -= this.personnage.caracteristic.degat;
+          if (this.monstre.caracteristic.vie <= 0) {
+            this.monstre.caracteristic.vie = 0;
+            console.log("monstre tue.");
+            this.monstre = this.getMonstre();
+          }
+        }, 3 * 1000);
+      } else {
+        clearInterval(this.battleInterval);
+      }
     },
   },
 };

@@ -6,7 +6,6 @@ class UserService {
   characters: Personnage[] = [];
 
   getCharacters(): Personnage[] {
-    console.log("get charac", this.characters);
     return this.characters;
   }
   setCharacters(characters: Personnage[]) {
@@ -20,18 +19,18 @@ class UserService {
       character.caracteristic = self.initCaracteristic();
     });
     saveService.saveGame();
-    console.log("characters :", this.characters);
   }
 
   setPersonnageZone(nomPersonnage: string, nomZone: string): Personnage {
     let result = new Personnage();
     this.characters.forEach(function (character) {
       if (character.nom == nomPersonnage) {
-        console.log("set zone for charac", character);
         character.nomZone = nomZone;
         result = character;
       }
     });
+    console.log(result);
+    saveService.saveGame();
     return result;
   }
 
@@ -39,7 +38,7 @@ class UserService {
     const caracteristic: Caracteristic = new Caracteristic();
     caracteristic.maxVie = 10.0;
     caracteristic.vie = 10.0;
-    caracteristic.degat = 10.0;
+    caracteristic.degat = 1.0;
 
     return caracteristic;
   }

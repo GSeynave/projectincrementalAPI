@@ -1,8 +1,6 @@
 <template>
   <h1>Web Incremental RPG</h1>
 
-  <h2 v-if="user">Bienvenue {{ user.username }}</h2>
-
   <div v-if="characters">
     <h3>Zones</h3>
   </div>

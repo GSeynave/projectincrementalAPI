@@ -35,11 +35,6 @@ export default {
   },
   methods: {
     onCreateCharacter() {
-      console.log(
-        "create character with classe",
-        this.characterName,
-        this.selectedClasse
-      );
       let characters = {
         characterName: this.characterName,
         classe: this.selectedClasse,
