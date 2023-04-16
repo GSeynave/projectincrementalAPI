@@ -1,8 +1,9 @@
 <template>
-  <div v-if="personnage && personnage.nom != ''">
+  <div v-if="personnage && personnage.nom != '' && monstre">
     <h3>Combat</h3>
     <p v-if="this.zone && this.zone.monstres && this.monstre">
-      Vous etes actuellement en train de combattre {{ monstre.nom }}
+      Vous etes actuellement en train de combattre {{ monstre.nom }} dans la
+      zone {{ zone.nom }}
     </p>
     <p>
       <progress
@@ -11,9 +12,10 @@
         v-bind:value="personnage.caracteristic.vie"
       ></progress>
       Vous avez : {{ personnage.caracteristic.vie }} pv et vous infigez
-      {{ personnage.caracteristic.degat }} degats. test :
-      personnage.caracteristic.vie : {{ personnage.caracteristic.vie }},
-      <button @click="doDamage(monstre, personnage)">Get damage</button>
+      {{ personnage.caracteristic.degat }} degats.
+      <button @click="doDamage()">Get damage</button>
+      {{ monstre.nom }} a : {{ monstre.caracteristic.vie }} pv et infige
+      {{ monstre.caracteristic.degat }} degats.
     </p>
   </div>
 
@@ -29,23 +31,29 @@ export default {
     personnage: Personnage,
     zone: Zone,
   },
+  watch: {
+    zone: function () {
+      this.monstres = this.zone.monstres;
+      this.monstre = this.getMonstre();
+    },
+  },
   data() {
     return {
+      monstres: [],
       monstre: this.getMonstre(),
-      maxVie: 0,
     };
   },
   methods: {
     getMonstre() {
-      console.log("get monstre", this.personnage);
-      if (this.zone && this.zone.monstres) {
-        var index = Math.floor(Math.random() * this.zone.monstres.length);
+      if (this.monstres && this.monstres.length > 0) {
+        const index = Math.floor(Math.random() * this.monstres.length);
+        const monstre = this.monstres[index];
+        console.log("monstre", monstre);
+        return (this.monstre = monstre);
       }
-      this.monstre = this.zone.monstres[index];
-      return this.monstre;
     },
-    doDamage(attacker, target) {
-      target.caracteristic.vie -= attacker.caracteristic.degat;
+    doDamage() {
+      this.monstre.caracteristic.vie -= this.personnage.caracteristic.degat;
     },
   },
 };

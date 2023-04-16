@@ -9,11 +9,12 @@ class SaveService {
     localStorage.setItem("save", JSON.stringify(save));
   }
 
-  async loadGame(): Promise<void> {
+  async loadGame(): Promise<boolean> {
     const save = await JSON.parse(localStorage.getItem("save") || "{}");
     console.log("saved get :", save);
     if (typeof save.characters !== "undefined")
       UserService.setCharacters(save.characters);
+    return true;
   }
 
   deleteGame(): void {

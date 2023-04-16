@@ -14,6 +14,9 @@ class ZoneService {
     this.zones.forEach(function (zone) {
       if (zone.nom == nom) result = zone;
     });
+    if (result.nom == "") {
+      return this.zones[0];
+    }
     return result;
   }
 }

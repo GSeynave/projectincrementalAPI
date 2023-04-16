@@ -58,22 +58,26 @@ export default defineComponent({
     this.initGame();
   },
   methods: {
-    initGame() {
-      SaveService.loadGame().then();
-      this.characters = UserService.getCharacters();
-      if (this.characters.length > 0)
-        this.zone = ZoneService.getZoneByNom(this.characters[0].nomZone);
+    async initGame() {
+      let gameLoaded: boolean = await SaveService.loadGame().then();
+
+      if (gameLoaded) {
+        this.characters = UserService.getCharacters();
+        if (this.characters.length > 0)
+          this.zone = ZoneService.getZoneByNom(this.characters[0].nomZone);
+      }
     },
     setPersonnageZone(zone: Zone) {
-      console.log(
-        "curent zone:",
-        this.characters[0].nomZone,
-        "new zone ",
-        zone.nom
-      );
-      if (this.characters[0].nomZone != zone.nom) {
-        this.characters[0].nomZone = zone.nom;
-        UserService.setPersonnageZone(this.characters[0].nom, zone.nom);
+      if (this.characters[0].nomZone !== zone.nom) {
+        console.log("st pesro zone", zone);
+        let updatedCharacter: Personnage = UserService.setPersonnageZone(
+          this.characters[0].nom,
+          zone.nom
+        );
+        if (updatedCharacter.nomZone !== "") {
+          this.characters[0] = updatedCharacter;
+          this.zone = zone;
+        }
       }
     },
   },
